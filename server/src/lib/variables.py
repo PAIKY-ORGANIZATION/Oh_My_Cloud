@@ -1,0 +1,1 @@
+auth_cookie_name = "AUTH_TOKEN"

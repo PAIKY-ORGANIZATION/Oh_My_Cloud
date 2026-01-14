@@ -1,0 +1,3 @@
+.venv/
+config/ #! Will be loaded from the compose or `docker run -e X=Y`
+__pycache__/

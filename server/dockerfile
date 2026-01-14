@@ -1,0 +1,14 @@
+FROM python:3.12-slim
+
+
+WORKDIR /app
+
+COPY requirements.txt .
+
+# RUN "python -m venv .venv && source .venv/bin/activate" #$ This image creates a container that is itself the virtual environment. `pip` is configured to install packages under /usr/local/lib/python3.12/site-packages.
+
+RUN pip install -r requirements.txt
+
+COPY . .
+
+CMD ["python3", "src/main.py"]

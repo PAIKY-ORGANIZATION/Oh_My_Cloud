@@ -1,0 +1,1 @@
+DATABASE_URL_PARTIAL="postgresql+asyncpg://postgres:postgres@localhost:5432/oh_my_cloud"
