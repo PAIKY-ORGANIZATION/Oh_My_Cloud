@@ -1,5 +1,5 @@
 interface ServerResponse  {
     success: boolean;
     message: string;
-    data: any
+    data: any 
 }

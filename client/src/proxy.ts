@@ -1,34 +1,34 @@
 // Using cookies
 
-import { NextRequest } from "next/server";
-import {authCheckUrl} from './lib/urls'
-import { axiosClient } from "./lib/axios_client";
-import { AxiosError } from "axios";
+import { NextRequest, NextResponse } from "next/server";
+import { dashboard_path } from "./lib/app_paths";
+import { ServerResponseAuthCheck, verifySession } from "./actions/verifiy_sessions";
+import { baseUrl } from "./lib/urls";
 
 
-interface ServerResponseAuthCheck extends ServerResponse {
-    data: {
-        id: string,
-        user_name: string,
-        email: string
-    }
-} 
 
+
+
+const protectedRoutes = [dashboard_path]
 
 const middleware = async (request: NextRequest) => {
     // console.log('Middleware', request.cookies);
 
-    try {
-        const response = await axiosClient.get<ServerResponseAuthCheck>(authCheckUrl)
-    
-        console.log(response.data)
-        
-    } catch (error) {
-        console.error(error)
-        if (error instanceof AxiosError) {
-            console.error(error.response?.data)
-        } 
+    const currentPath = request.nextUrl.pathname //$ Will look like "/dashboard"
+
+    console.log('Current path', currentPath)
+
+    if (!protectedRoutes.includes(currentPath)){
+        return NextResponse.next()
     }
+
+    const session: ServerResponseAuthCheck | null= await verifySession()
+    if (!session) {
+        return NextResponse.redirect(new URL('login', baseUrl))
+    }
+
+
+    NextResponse.next()
 
 }
 
