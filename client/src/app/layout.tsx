@@ -25,7 +25,9 @@ export default function RootLayout({ children}: Readonly<{children: React.ReactN
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        {children}
+        <div className="h-[100vh] flex flex-col bg-[#ffffff]">
+          {children}
+        </div>
       </body>
     </html>
   );
