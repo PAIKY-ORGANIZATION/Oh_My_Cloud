@@ -1,14 +1,34 @@
 // Using cookies
 
 import { NextRequest } from "next/server";
-import axios from "axios"
+import {authCheckUrl} from './lib/urls'
+import { axiosClient } from "./lib/axios_client";
+import { AxiosError } from "axios";
+
+
+interface ServerResponseAuthCheck extends ServerResponse {
+    data: {
+        id: string,
+        user_name: string,
+        email: string
+    }
+} 
 
 
 const middleware = async (request: NextRequest) => {
-    console.log('Middleware', request.cookies);
+    // console.log('Middleware', request.cookies);
 
-
-    const response = await axios.get()
+    try {
+        const response = await axiosClient.get<ServerResponseAuthCheck>(authCheckUrl)
+    
+        console.log(response.data)
+        
+    } catch (error) {
+        console.error(error)
+        if (error instanceof AxiosError) {
+            console.error(error.response?.data)
+        } 
+    }
 
 }
 
