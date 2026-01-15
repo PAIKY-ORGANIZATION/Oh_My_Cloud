@@ -3,7 +3,7 @@
 
 import { FormItem, UserForm } from "@/src/context/user_form"
 import { RegisterUserService } from "@/src/http_services/users/create"
-import { remoteAxiosClient } from "@/src/lib/http_clients/remote_http_client"
+import { remoteAxiosClient } from "@/src/lib/http/remote_http_client"
 import { AxiosError } from "axios"
 import Link from "next/link"
 

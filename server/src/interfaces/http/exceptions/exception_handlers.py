@@ -12,7 +12,6 @@ class ErrorResponse(TypedDict):
     message: str
     error_code: str
     details: Optional[Any]
-    data: Optional[Any]
 
 
 def _return_app_error_response(exc: AppError) -> JSONResponse:
@@ -20,7 +19,6 @@ def _return_app_error_response(exc: AppError) -> JSONResponse:
         "message": exc.message,
         "error_code": exc.error_code,
         "details": exc.details,
-        "data": None
         # "success": False, #$ This is redundant because the status code already exists
     }
 

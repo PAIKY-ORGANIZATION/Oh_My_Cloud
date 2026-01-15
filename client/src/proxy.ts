@@ -9,7 +9,7 @@ import { AxiosError } from "axios";
 
 
 
-const get_session = async (): Promise<ServerResponseAuthCheck | null> => {
+const _get_session = async (): Promise<ServerResponseAuthCheck | null> => {
     //$ Doing try/catch here because "auth_check" should remain for http only errors
     try {
         return await auth_check()
@@ -42,7 +42,7 @@ const middleware = async (request: NextRequest) => {
         }
 
 
-        const session: ServerResponseAuthCheck | null = await get_session()
+        const session: ServerResponseAuthCheck | null = await _get_session()
 
         if(protectedRoutes.includes(currentPath) && !session) {
             return NextResponse.redirect(new URL('login', request.nextUrl)) //$ Don't use the `baseUrl` here because it points to the backend's port. Instead, `request.nextUrl` will contain the current hostname.
