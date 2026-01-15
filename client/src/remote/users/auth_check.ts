@@ -16,6 +16,5 @@ export const auth_check = async (): Promise<ServerResponseAuthCheck | null>  =>{
     const {data} = await axiosClient.get<ServerResponseAuthCheck>(authCheckUrl)
 
     return data
-    
 
 }

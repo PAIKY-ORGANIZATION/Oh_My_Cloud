@@ -49,7 +49,6 @@ const middleware = async (request: NextRequest) => {
     }
 
     return NextResponse.next()
-
 }
 
 export default middleware;
