@@ -1,12 +1,25 @@
 
 
-const protocol = process.env.NEXT_PUBLIC_REMOTE_BACKEND_HTTP_PROTOCOL
-const host = process.env.NEXT_PUBLIC_REMOTE_BACKEND_HOST
-const port = process.env.NEXT_PUBLIC_REMOTE_BACKEND_PORT
+
+class AppUrls {
+    
+    
+    public authCheckUrl: string
+    public createUserUrl: string
+    
+    constructor(public baseUrl: URL){
+        
+        this.authCheckUrl =  new URL('/users/auth-check', baseUrl.href, ).toString()
+        
+        this.createUserUrl =  new URL('/users/create', baseUrl.href).toString()
+    }
+    
+}
 
 
-export const baseUrl = new URL(`${protocol}://${host}:${port}`)
+const internalBackendUrl = process.env.INTERNAL_BACKEND_URL!
+const remoteBackendUrl = process.env.NEXT_PUBLIC_REMOTE_BACKEND_URL!
 
-export const authCheckUrl =  new URL('/users/auth-check', baseUrl.href, ).toString()
 
-export const createUserUrl =  new URL('/users/create', baseUrl.href).toString()
+export const internalUrls = new AppUrls(new URL(internalBackendUrl))
+export const remoteUrls = new AppUrls(new URL(remoteBackendUrl))
