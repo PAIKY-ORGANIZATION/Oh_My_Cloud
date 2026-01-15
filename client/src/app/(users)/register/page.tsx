@@ -2,6 +2,7 @@
 "use client"
 
 import { FormItem, UserForm } from "@/src/context/user_form"
+import { createUser } from "@/src/remote/users/create"
 import Link from "next/link"
 
 export default function Register() {
@@ -19,6 +20,10 @@ export default function Register() {
         const password = formData.get('password') as string
         
         console.log(email, password, username)
+
+        try {
+            await createUser(username, email, password)
+        }
     }
 
     return (

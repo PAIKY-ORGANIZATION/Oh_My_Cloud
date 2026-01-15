@@ -8,3 +8,4 @@ export const baseUrl = new URL(`${protocol}://${host}:${port}`)
 
 export const authCheckUrl =  new URL('/users/auth-check', baseUrl.href, ).toString()
 
+export const createUserUrl =  new URL('/users/create', baseUrl.href, ).toString()
