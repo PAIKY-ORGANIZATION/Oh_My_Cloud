@@ -3,11 +3,21 @@
 
 import { FormItem, UserForm } from "@/src/context/user_form"
 import { RegisterUserService } from "@/src/http_services/users/create"
+import { unexpected_error_path } from "@/src/lib/app_paths"
+import { AppError, toAppError } from "@/src/lib/http/app_error"
 import { remoteAxiosClient } from "@/src/lib/http/remote_http_client"
-import { AxiosError } from "axios"
+import { validateUser } from "@/src/schemas/user_schemas"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { toast } from "react-toast"
+// import toast from "react-toast"
+
+
 
 export default function Register() {
+
+    const router = useRouter()
+
 
     const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -18,17 +28,32 @@ export default function Register() {
         const username = formData.get('username') as string
         const email = formData.get('email') as string
         const password = formData.get('password') as string
-        console.log(email, password, username)
+        const registerData = {username, email, password}
 
+        console.log(registerData)
+
+        const result = validateUser(registerData)
+         
+        if(!result.success){
+            toast.error(result.error.issues[0].message)
+            return
+        }
+        
         try {
             const registerUserService = new RegisterUserService(remoteAxiosClient)
             const result =  await registerUserService.send(username, email, password)
-        
-            
-        } catch (e) {
-            if (e instanceof AxiosError){
+            toast.success("User registered successfully")
+            router.push("/login")
 
+        } catch (e) {
+
+            console.log(e)
+            const err: AppError = toAppError(e as Error)
+            if(err.kind == "unknown" || err.kind == "network"){
+                router.push(unexpected_error_path + "/" + err.message)
+                return
             }
+            toast.error(err.message)
         }
     }
 
@@ -40,8 +65,8 @@ export default function Register() {
                     <FormItem name="email" type="email" label="Email"></FormItem>
                     <FormItem name="password" type="password" label="Password"></FormItem>
                 </UserForm>
-                <Link href="/register">
-                    <p> Don&apos;t have an account? <span className="text-blue-500 hover:underline"> Sign up</span> </p>
+                <Link href="/login">
+                    <p> Already have an account? <span className="text-blue-500 hover:underline"> Login</span> </p>
                 </Link>
             </div>
         </div>

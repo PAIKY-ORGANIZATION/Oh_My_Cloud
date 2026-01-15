@@ -2,11 +2,15 @@
 //- NextJS by default uses "error.tsx" for unexpected errors
 //$ However, it only works for client side errors. So it will not work if you, for example, throw an error from the middleware.
 
-"use client";
 
 import Link from "next/link";
 
-export default function UnexpectedErrorPage() {
+type Params = {
+    params: Promise<{error_message: string}>
+}
+
+export default async function UnexpectedErrorPage({params}: Params) {
+  const {error_message} = await params
 
   return (
     <main className="flex-1 grid place-items-center px-6">
@@ -21,7 +25,7 @@ export default function UnexpectedErrorPage() {
               Unexpected server side error occurred
             </h1>
             <p className="mt-1 text-sm text-white/70">
-              Something went wrong. Try again or go home.
+              {decodeURIComponent(error_message)}
             </p>
           </div>
         </div>

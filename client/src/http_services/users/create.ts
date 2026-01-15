@@ -1,4 +1,4 @@
-import { backendPaths } from "@/src/lib/server_paths"
+import { createUserPath } from "@/src/lib/server_paths"
 import { AxiosInstance } from "axios"
 
 
@@ -9,7 +9,7 @@ export class RegisterUserService {
 
     async send(userName: string, email: string, password: string){
         const {data} = await this.httpClient.post(
-            backendPaths.createUserPath,
+            createUserPath,
             {
                 user_name: userName,
                 email,

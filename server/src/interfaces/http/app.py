@@ -5,7 +5,7 @@ from interfaces.http.exceptions.exception_handlers import app_error_handler, glo
 from interfaces.http.routers.files_router import files_router
 from interfaces.http.routers.shareable_file_access_router import shareable_file_access_router
 from interfaces.http.routers.users_router import users_router
-
+from fastapi.middleware.cors import CORSMiddleware
 
 
 
@@ -23,3 +23,12 @@ app.include_router(shareable_file_access_router)
 app.exception_handler(RequestValidationError)(validation_error_handler)
 app.exception_handler(Exception)(global_exception_handler)
 app.exception_handler(AppError)(app_error_handler)
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)

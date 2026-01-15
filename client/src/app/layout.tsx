@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import ToastContainerClient from "../components/toast_container_client";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,6 +29,7 @@ export default function RootLayout({ children}: Readonly<{children: React.ReactN
         <div className="h-[100vh] flex flex-col bg-[#1b1b1b]">
           {children}
         </div>
+        <ToastContainerClient />
       </body>
     </html>
   );

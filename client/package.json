@@ -6,7 +6,6 @@
     "dev-local": "ENVIRONMENT=local next dev",
     "build-local": "ENVIRONMENT=local next build",
     "start-local": "ENVIRONMENT=local next start",
-    
     "lint": "eslint"
   },
   "dependencies": {
@@ -14,7 +13,9 @@
     "dotenv": "^17.2.3",
     "next": "16.1.1",
     "react": "19.2.3",
-    "react-dom": "19.2.3"
+    "react-dom": "19.2.3",
+    "react-toast": "^1.0.3",
+    "zod": "^4.3.5"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
