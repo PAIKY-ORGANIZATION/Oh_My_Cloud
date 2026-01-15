@@ -3,7 +3,7 @@ import { AxiosInstance } from "axios"
 
 
 
-export class CreateUserService {
+export class RegisterUserService {
 
     constructor(private httpClient: AxiosInstance){}
 

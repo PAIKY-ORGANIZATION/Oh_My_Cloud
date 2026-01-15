@@ -2,7 +2,8 @@
 "use client"
 
 import { FormItem, UserForm } from "@/src/context/user_form"
-import { createUser } from "@/src/http_services/users/create"
+import { RegisterUserService } from "@/src/http_services/users/create"
+import { internalAxiosClient } from "@/src/lib/axios_client"
 import { AxiosError } from "axios"
 import Link from "next/link"
 
@@ -20,7 +21,8 @@ export default function Register() {
         console.log(email, password, username)
 
         try {
-            await createUser(username, email, password)
+            const registerUserService = new RegisterUserService(internalAxiosClient)
+            const result =  await registerUserService.send(username, email, password)
         } catch (e) {
             if (e instanceof AxiosError){
 
