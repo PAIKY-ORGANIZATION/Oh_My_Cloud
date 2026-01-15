@@ -3,7 +3,7 @@
 
 import { FormItem, UserForm } from "@/src/context/user_form"
 import { RegisterUserService } from "@/src/http_services/users/create"
-import { internalAxiosClient } from "@/src/lib/axios_client"
+import { remoteAxiosClient } from "@/src/lib/http_clients/remote_http_client"
 import { AxiosError } from "axios"
 import Link from "next/link"
 
@@ -21,7 +21,7 @@ export default function Register() {
         console.log(email, password, username)
 
         try {
-            const registerUserService = new RegisterUserService(internalAxiosClient)
+            const registerUserService = new RegisterUserService(remoteAxiosClient)
             const result =  await registerUserService.send(username, email, password)
         } catch (e) {
             if (e instanceof AxiosError){
