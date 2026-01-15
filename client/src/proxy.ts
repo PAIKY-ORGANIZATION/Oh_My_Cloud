@@ -2,8 +2,8 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { dashboard_path } from "./lib/app_paths";
-import { ServerResponseAuthCheck, verifySession } from "./actions/verifiy_sessions";
 import { baseUrl } from "./lib/urls";
+import { ServerResponseAuthCheck, auth_check } from "./remote/users/auth_check";
 
 
 
@@ -12,7 +12,6 @@ import { baseUrl } from "./lib/urls";
 const protectedRoutes = [dashboard_path]
 
 const middleware = async (request: NextRequest) => {
-    // console.log('Middleware', request.cookies);
 
     const currentPath = request.nextUrl.pathname //$ Will look like "/dashboard"
 
@@ -22,7 +21,7 @@ const middleware = async (request: NextRequest) => {
         return NextResponse.next()
     }
 
-    const session: ServerResponseAuthCheck | null= await verifySession()
+    const session: ServerResponseAuthCheck | null= await auth_check()
     if (!session) {
         return NextResponse.redirect(new URL('login', baseUrl))
     }

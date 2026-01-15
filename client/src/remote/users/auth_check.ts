@@ -1,6 +1,6 @@
+import { axiosClient } from "@/src/lib/axios_client"
+import { authCheckUrl } from "@/src/lib/urls"
 import { AxiosError } from "axios"
-import { axiosClient } from "../lib/axios_client"
-import { authCheckUrl } from "../lib/urls"
 
 
 export interface ServerResponseAuthCheck extends ServerResponse {
@@ -12,7 +12,7 @@ export interface ServerResponseAuthCheck extends ServerResponse {
 } 
 
 
-export const verifySession = async (): Promise<ServerResponseAuthCheck | null>  =>{
+export const auth_check = async (): Promise<ServerResponseAuthCheck | null>  =>{
 
     try {
         const {data} = await axiosClient.get<ServerResponseAuthCheck>(authCheckUrl)
