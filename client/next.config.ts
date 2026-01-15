@@ -1,5 +1,5 @@
 import type { NextConfig } from "next";
-import "./src/bootstrap.ts"
+import "./src/bootstrap_env.js"
 
 
 

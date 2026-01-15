@@ -7,13 +7,14 @@ import dotenv from "dotenv"
 
 
 const requiredEnvVars: string[] = [
-    'NEXT_PUBLIC_BACKEND_HTTP_PROTOCOL',
-    'NEXT_PUBLIC_BACKEND_HOST',
-    'NEXT_PUBLIC_BACKEND_PORT',
+    'NEXT_PUBLIC_REMOTE_BACKEND_HTTP_PROTOCOL',
+    'NEXT_PUBLIC_REMOTE_BACKEND_HOST',
+    'NEXT_PUBLIC_REMOTE_BACKEND_PORT',
 ]
 
-const loadENV = ()=>{
-    dotenv.config({path: `./config/${environment}.env`})
+function loadENV (){
+    dotenv.config({path: `./config/${environment}_private.env`})
+    dotenv.config({path:  `./config/${environment}_public.env`})
 
     for (const env of requiredEnvVars) {
         if(!process.env[env]){

@@ -1,8 +1,7 @@
 import { axiosClient } from "@/src/lib/axios_client"
 import { createUserUrl } from "@/src/lib/urls"
 
-export const createUser = async (userName: string, email: string, password: string)=>{
-
+export async function createUser  (userName: string, email: string, password: string) {
 
     const {data} = await axiosClient.post(
         createUserUrl, 
@@ -11,9 +10,7 @@ export const createUser = async (userName: string, email: string, password: stri
             email,
             password
         },
-        
     )
 
     return data
-
 }

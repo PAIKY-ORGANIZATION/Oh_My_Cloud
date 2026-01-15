@@ -11,7 +11,7 @@ export interface ServerResponseAuthCheck extends ServerResponse {
 } 
 
 
-export const auth_check = async (): Promise<ServerResponseAuthCheck | null>  =>{
+export async function auth_check (): Promise<ServerResponseAuthCheck | null> {
 
     const {data} = await axiosClient.get<ServerResponseAuthCheck>(authCheckUrl)
 
