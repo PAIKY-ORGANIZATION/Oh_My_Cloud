@@ -4,8 +4,9 @@
   "private": true,
   "scripts": {
     "dev-local": "ENVIRONMENT=local next dev",
-    "build": "next build",
-    "start": "next start",
+    "build-local": "ENVIRONMENT=local next build",
+    "start-local": "ENVIRONMENT=local next start",
+    
     "lint": "eslint"
   },
   "dependencies": {
