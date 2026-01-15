@@ -1,4 +1,5 @@
 
+from typing import Any, Optional, TypedDict
 from fastapi import Request
 
 from fastapi.exceptions import RequestValidationError
@@ -6,14 +7,16 @@ from fastapi.responses import JSONResponse
 
 from interfaces.http.exceptions.custom_exception_instances  import AppError, SeverError, UnprocessableEntity
 from interfaces.http.exceptions.rich_error_formater import rich_error_formater
-from interfaces.schemas.shared import StandardResponse
 
-
-
+class ErrorResponse(TypedDict):
+    message: str
+    error_code: str
+    details: Optional[Any]
+    data: Optional[Any]
 
 
 def _return_app_error_response(exc: AppError) -> JSONResponse:
-    content: StandardResponse = {
+    content: ErrorResponse = {
         "message": exc.message,
         "error_code": exc.error_code,
         "details": exc.details,

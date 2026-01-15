@@ -12,12 +12,6 @@ class AppError(Exception):
     def __post_init__(self):
         super().__init__(self.message)
 
-    # def __init__(self, *, message: str, status_code: int, details: Optional[Any] = None, error_code: str):
-    #     self.message = message
-    #     self.status_code = status_code
-    #     self.details = details
-    #     self.error_code = error_code #$ This will be  used by  frontend as a contract
-    #     super().__init__(message)
 
 class SeverError(AppError):
     def __init__(self, details: Optional[Any] = None, message: Optional[str] = None):
@@ -41,14 +35,31 @@ class BadRequest(AppError):
 
 class UnprocessableEntity(AppError):
     def __init__(self, details: Optional[Any] = None):
-        super().__init__(message='Unprocessable Entity', status_code=422, details=details, error_code="UNPROCESSABLE_ENTITY")
+        super().__init__(
+            message='Unprocessable Entity', 
+            status_code=422, 
+            details=details, 
+            error_code="UNPROCESSABLE_ENTITY"
+        )
+
+
 
 
 class Unauthorized(AppError):
     def __init__(self, message: str, details: Optional[Any] = None):
-        super().__init__(message=message, status_code=401, details=details, error_code="UNAUTHORIZED")
+        super().__init__(
+            message=message, 
+            status_code=401, 
+            details=details, 
+            error_code="UNAUTHORIZED"
+        )
 
 
 class ItemNotFound(AppError):
-    def __init__(self, message: str):
-        super().__init__(message=message, status_code=404, error_code="ITEM_NOT_FOUND")
+    def __init__(self, message: str, details: Optional[Any] = None):
+        super().__init__(
+            message=message, 
+            status_code=404, 
+            details=details, 
+            error_code="ITEM_NOT_FOUND"
+        )

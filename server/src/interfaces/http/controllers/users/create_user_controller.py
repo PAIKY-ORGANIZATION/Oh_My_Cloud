@@ -17,7 +17,7 @@ async def create_user_controller (
     body: UserCreateRequest = Body(...),  #$ Body(...) is used to make the body required
     hasher: BcryptHasherService = Depends(get_hasher_provider),
     user_repository: UserRepository = Depends(get_user_repository_provider)
-): 
+)-> JSONResponse: 
 
 
     new_user: User = await CreateUserUseCase(user_repository, hasher).execute(user_data=body)

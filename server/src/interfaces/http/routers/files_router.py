@@ -1,6 +1,5 @@
 
 from fastapi import APIRouter
-from interfaces.http.controllers.shareable_file_access.create_shareable_file_access_controller import create_shareable_file_access_controller
 from interfaces.http.controllers.files.delete_file_controller import delete_file_controller
 from interfaces.http.controllers.files.get_user_file_list_controller import get_user_file_list_controller
 from interfaces.http.controllers.files.upload_file_controller import upload_file_controller

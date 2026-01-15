@@ -1,4 +1,5 @@
 from fastapi import Depends
+from fastapi.responses import JSONResponse
 from entities.user_entity import User
 from interfaces.db.repositories.file_repository import FileRepository
 from interfaces.db.repositories.user_repository import UserRepository
@@ -9,7 +10,6 @@ from interfaces.http.dependencies.hash_provider import get_hasher_provider
 from interfaces.http.dependencies.object_storage_provider import get_object_storage_provider
 from interfaces.http.dependencies.user_repository_provider import get_user_repository_provider
 from interfaces.object_storage.object_storage_service import ObjectStorageClientService
-from interfaces.schemas.shared import StandardResponse
 from interfaces.schemas.users.delete_user_schemas import DeleteUserRequest
 from lib.variables import auth_cookie_name
 from use_cases.users.delete_user_use_case import DeleteUserUseCase
@@ -24,7 +24,7 @@ async def delete_user_controller(
     hasher: BcryptHasherService = Depends(get_hasher_provider),
     object_storage_provider: ObjectStorageClientService = Depends(get_object_storage_provider),
     file_repository: FileRepository = Depends(get_file_repository_provider),
-) -> StandardResponse:
+)-> JSONResponse:
     
 
     delete_user_use_case = DeleteUserUseCase(user_repository, file_repository, hasher, object_storage_provider)
@@ -33,8 +33,4 @@ async def delete_user_controller(
 
     response.delete_cookie(key=auth_cookie_name)
 
-    return {
-        "success": True,
-        "message": "User deleted successfully",
-        "data": None
-    }
+    return JSONResponse(status_code=200, content=None)

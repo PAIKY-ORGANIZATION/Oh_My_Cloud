@@ -1,5 +1,6 @@
 import os
 from fastapi import Depends, File, UploadFile, BackgroundTasks
+from fastapi.responses import JSONResponse
 
 from entities.user_entity import User
 from interfaces.db.repositories.file_repository import FileRepository
@@ -12,7 +13,6 @@ from interfaces.http.dependencies.gzip_provider import get_gzip_provider
 from interfaces.http.dependencies.object_storage_provider import get_object_storage_provider
 from interfaces.http.dependencies.startle_file_receiver_provider import get_startle_file_receiver_provider
 from interfaces.object_storage.object_storage_service import ObjectStorageClientService
-from interfaces.schemas.shared import StandardResponse
 from use_cases.files.process_and_upload_use_case import ProcessAndUploadUseCase, ProcessAndUploadUseCaseExecuteInput
 from use_cases.files.store_file_locally_use_case import StoreFileLocallyUseCase
 from uuid import uuid4
@@ -44,7 +44,7 @@ async def upload_file_controller (
     object_storage_provider: ObjectStorageClientService = Depends(get_object_storage_provider),
     authenticated_user: User = Depends(get_auth_user_provider), #* This handles authentication.
     file_repository: FileRepository = Depends(get_file_repository_provider),
-) -> StandardResponse:
+)-> JSONResponse:
    
     #* Cleanup file_name
     safe_filename = os.path.basename(file.filename or 'no_filename_provided') #$ Strip any, likely maliciously appended path info Ej: `../../etc/passwd.txt` -> `passwd.txt`

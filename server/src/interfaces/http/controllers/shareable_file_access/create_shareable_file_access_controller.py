@@ -1,11 +1,11 @@
 import json
 from fastapi import Body, Depends
+from fastapi.responses import JSONResponse
 from entities.user_entity import User
 from interfaces.db.repositories.shareable_file_access_repository import ShareableFileAccessRepository
 from interfaces.http.dependencies.auth_user_provider import get_auth_user_provider
 from interfaces.http.dependencies.shareable_file_access_repository_provider import get_shareable_file_access_repository_provider
 from interfaces.schemas.shareable_file_access.create_shareable_file_access_schemas import CreateFileAccessRequest
-from interfaces.schemas.shared import StandardResponse
 from use_cases.files.create_shareable_file_access_use_case import CreateFileAccessUseCase
 
 
@@ -13,7 +13,7 @@ async def create_shareable_file_access_controller(
     user: User = Depends(get_auth_user_provider), 
     body: CreateFileAccessRequest = Body(...),
     shareable_file_access_repository: ShareableFileAccessRepository = Depends(get_shareable_file_access_repository_provider),
-) -> StandardResponse:
+)-> JSONResponse:
 
     create_shareable_file_access_use_case = CreateFileAccessUseCase(
         shareable_file_access_repository=shareable_file_access_repository,
@@ -28,10 +28,4 @@ async def create_shareable_file_access_controller(
         password=body.password,
     )
     
-    return {
-        "success": True,
-        "message": "Shareable link created successfully",
-        "data": {
-            "shareable_file_access_id": shareable_file_access.id
-        }
-    }
+    return JSONResponse(status_code=201, content=shareable_file_access.id)
