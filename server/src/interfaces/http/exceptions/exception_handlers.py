@@ -14,10 +14,11 @@ from interfaces.schemas.shared import StandardResponse
 
 def _return_app_error_response(exc: AppError) -> JSONResponse:
     content: StandardResponse = {
-        "success": False,
         "message": exc.message,
+        "code": exc.code,
         "details": exc.details,
         "data": None
+        # "success": False, #$ This is redundant because the status code already exists
     }
 
     return JSONResponse(
