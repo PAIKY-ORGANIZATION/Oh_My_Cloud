@@ -5,16 +5,14 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
 export default function UnexpectedErrorPage() {
-  const router = useRouter();
 
   return (
     <main className="flex-1 grid place-items-center px-6">
       <div className="w-full max-w-md rounded-2xl border border-white/10 bg-white/5 p-6 shadow-xl">
         <div className="flex items-start gap-3">
-          <div className="grid size-10 place-items-center rounded-xl border border-white/10 bg-gradient-to-br from-cyan-400/20 to-fuchsia-400/20 text-white font-semibold">
+          <div className="grid size-10 place-items-center rounded-xl border border-white/10 bg-linear-to-br from-cyan-400/20 to-fuchsia-400/20 text-white font-semibold">
             !
           </div>
 

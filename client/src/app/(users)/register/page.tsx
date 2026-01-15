@@ -3,27 +3,29 @@
 
 import { FormItem, UserForm } from "@/src/context/user_form"
 import { createUser } from "@/src/remote/users/create"
+import { AxiosError } from "axios"
 import Link from "next/link"
 
 export default function Register() {
-
 
     const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         const formElement = e.currentTarget //$ This is the actual <form> element
         const formData = new FormData(formElement) //$ `new FormData` accepts an `HTMLFormElement` in its constructor.
  
- 
         //? Validate form data with Zod
         const username = formData.get('username') as string
         const email = formData.get('email') as string
         const password = formData.get('password') as string
-        
         console.log(email, password, username)
 
-        // try {
-        //     await createUser(username, email, password)
-        // }
+        try {
+            await createUser(username, email, password)
+        } catch (e) {
+            if (e instanceof AxiosError){
+
+            }
+        }
     }
 
     return (

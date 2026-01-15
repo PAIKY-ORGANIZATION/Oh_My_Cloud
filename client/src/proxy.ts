@@ -25,10 +25,6 @@ const get_session = async (): Promise<ServerResponseAuthCheck | null> => {
 
 
 
-
-
-
-
 const protectedRoutes = [dashboard_path]
 
 const unauthenticatedRoutes = ["/login", "/register"] //$ Authenticated users should not be able to access these routes
@@ -59,14 +55,7 @@ const middleware = async (request: NextRequest) => {
         return NextResponse.next()
     
     } catch (e) {
-        console.log('Error in middleware')
-        console.log('Error in middleware')
-        console.log('Error in middleware')
-        console.log('Error in middleware')
-        console.log('Error in middleware')
-        console.log('Error in middleware')
-        console.log('Error in middleware')
-        // console.error(e)
+        console.error(e)
         //? May find a way to also pass the error message to the error page, it is possible here.
         return NextResponse.redirect(new URL(unexpected_server_side_error_path, request.nextUrl))
     }
