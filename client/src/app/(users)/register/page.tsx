@@ -23,6 +23,8 @@ export default function Register() {
         try {
             const registerUserService = new RegisterUserService(remoteAxiosClient)
             const result =  await registerUserService.send(username, email, password)
+        
+            
         } catch (e) {
             if (e instanceof AxiosError){
 
