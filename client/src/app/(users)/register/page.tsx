@@ -21,9 +21,9 @@ export default function Register() {
         
         console.log(email, password, username)
 
-        try {
-            await createUser(username, email, password)
-        }
+        // try {
+        //     await createUser(username, email, password)
+        // }
     }
 
     return (
