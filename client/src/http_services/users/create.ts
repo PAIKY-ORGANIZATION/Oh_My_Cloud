@@ -1,4 +1,4 @@
-import { backendPaths } from "@/src/lib/urls"
+import { backendPaths } from "@/src/lib/server_paths"
 import { AxiosInstance } from "axios"
 
 

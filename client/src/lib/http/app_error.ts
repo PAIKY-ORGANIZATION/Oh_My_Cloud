@@ -1,9 +1,9 @@
 import { AxiosError } from "axios"
 
 export type AppError = 
+| {kind: "unknown", message?: string}
 | {kind: "http", status: number, code?: string, message?: string}
 | {kind: "timeout", message?: string}
-| {kind: "unknown", message?: string}
 | {kind: "network", message?: string} //$ This includes: backend not active, unreachable, wrong host, DNS resolution errors, CORS, etc
 
 interface StandardBackendErrorData {
