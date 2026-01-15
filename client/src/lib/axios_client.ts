@@ -1,13 +1,18 @@
-import axios from 'axios'
-import { internalUrls, remoteUrls } from './urls'
+import axios, { AxiosInstance } from 'axios'
+import { internalBackendUrl, remoteBackendUrl } from './urls'
+
+
+
+
+function createHttpClient (backendBaseURL: string): AxiosInstance {
+    return axios.create({
+        baseURL: backendBaseURL,
+        timeout: 15_000 //$ 15 seconds
+    })
+}
 
 //* Used in server-side code like middleware
-export const internalAxiosClient = axios.create({
-    baseURL: internalUrls.baseUrl.toString()
-})
+export const internalAxiosClient = createHttpClient(internalBackendUrl)
 
-
-//* Used in client-side code
-export const remoteAxiosClient = axios.create({
-    baseURL: remoteUrls.baseUrl.toString()
-})
+//* Used in client-side code    
+export const remoteAxiosClient = createHttpClient(remoteBackendUrl)

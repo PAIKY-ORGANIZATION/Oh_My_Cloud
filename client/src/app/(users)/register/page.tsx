@@ -2,7 +2,7 @@
 "use client"
 
 import { FormItem, UserForm } from "@/src/context/user_form"
-import { createUser } from "@/src/remote/users/create"
+import { createUser } from "@/src/http_services/users/create"
 import { AxiosError } from "axios"
 import Link from "next/link"
 

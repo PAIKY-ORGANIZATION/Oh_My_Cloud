@@ -2,7 +2,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { dashboard_path, unexpected_server_side_error_path } from "./lib/app_paths";
-import { ServerResponseAuthCheck, auth_check } from "./remote/users/auth_check";
+import { ServerResponseAuthCheck, auth_check } from "./http_services/users/auth_check";
 import { AxiosError } from "axios";
 
 
