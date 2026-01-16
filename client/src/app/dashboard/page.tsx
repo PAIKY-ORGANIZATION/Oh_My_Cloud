@@ -15,11 +15,13 @@ export default  async function Dashboard (){
     const getUserFilesService = new GetUserFileListService(internalAxiosClient)
 
     let userFiles
+    
     try{
         userFiles = await getUserFilesService.send(authToken)
     }catch(e){
         const err: AppError = toAppError(e as Error)
         redirect(unexpected_error_path + "/" + err.message) //$ this automatically returns
+        //! If at this point there  is some kind of error, the page won't load at all. Refine if necessary, example: just pass an error flag to the  <DashboardClientComponent>
     }
 
     return (

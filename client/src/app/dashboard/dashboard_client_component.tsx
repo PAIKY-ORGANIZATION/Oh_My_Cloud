@@ -6,13 +6,16 @@ import { AppError, toAppError } from "@/src/lib/http/app_error"
 import { remoteAxiosClient } from "@/src/lib/http/remote_http_client"
 import { useState } from "react"
 import { toast } from "react-toast"
-
+import { useRouter } from "next/navigation"
+import { unexpected_error_path } from "@/src/lib/app_paths"
 
 
 
 export function DashboardClientComponent ({initialUserFiles}: {initialUserFiles: UserFile []}) {
 
     const [userFiles, setUserFiles] = useState<UserFile []>(initialUserFiles)
+
+    const router = useRouter()
 
     async function uploadFile (e: React.ChangeEvent<HTMLInputElement>) {
         const fileList: FileList | null = e.target.files
@@ -30,11 +33,10 @@ export function DashboardClientComponent ({initialUserFiles}: {initialUserFiles:
         }catch(e){
             const err: AppError = toAppError(e as Error)
             if (err.kind == "network" || err.kind == "unknown"){
-                
+                router.push(unexpected_error_path + "/" + err.message); return
             }
-
+            toast.error(err.message)
             //? Handle file size limit
-
         }
 
 

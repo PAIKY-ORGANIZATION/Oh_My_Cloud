@@ -1,6 +1,7 @@
 
 from typing import Any, Optional, TypedDict
 from fastapi import Request
+from fastapi.encoders import jsonable_encoder
 
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
@@ -41,6 +42,12 @@ async def global_exception_handler(_request: Request, exc: Exception):
 
 
 async def validation_error_handler(_request: Request, exc: RequestValidationError):
+
+    safe_details: dict[str, Any] = jsonable_encoder(exc.errors()) #$ In some rare cases `exc.errors()` (a dict) may contain a value that is, for example an actual Python error (like TypeError). 
+    #$ Why not "json.dumps(exc.errors())"? Because it only serializes VALID dicts that can be serialized to JSON.
+    #$ JSONResponse also uses json.dumps" so it will also fail.
+    #$ jsonable_encoder converts many common FastAPI-relevant Python objects into JSON-compatible primitives. It does not guarantee correctness for arbitrary objects though.
+
     error = UnprocessableEntity(message='Validation error, read details', details=exc.errors()) #$ Send the  Pydantic JSON in the details.
     return _return_app_error_response(error)
 

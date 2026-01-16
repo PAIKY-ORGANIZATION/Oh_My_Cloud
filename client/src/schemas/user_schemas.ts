@@ -15,9 +15,6 @@ export const validateLoginUserData = (user: LoginUserSchemaType) => {
 
 
 
-
-
-
 //Extending the loginUserSchema to create a registerUserSchema
 const registerUserSchema = loginUserSchema.extend({
     username: z
