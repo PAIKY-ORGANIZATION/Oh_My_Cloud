@@ -2,6 +2,7 @@ from fastapi import Depends
 from fastapi.responses import JSONResponse
 from entities.user_entity import User
 from interfaces.http.dependencies.auth_user_provider import get_auth_user_provider
+from interfaces.http.exceptions.custom_exception_instances import UnprocessableEntity
 
 
 async def get_user_file_list_controller (
@@ -10,6 +11,8 @@ async def get_user_file_list_controller (
 
     files_list = authenticated_user.files
 
+
+    raise UnprocessableEntity("lol")
 
 
     return JSONResponse(status_code=200, content=[file.to_dto() for file in files_list])

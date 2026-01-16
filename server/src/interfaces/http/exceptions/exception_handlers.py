@@ -41,7 +41,7 @@ async def global_exception_handler(_request: Request, exc: Exception):
 
 
 async def validation_error_handler(_request: Request, exc: RequestValidationError):
-    error = UnprocessableEntity(details=exc.errors())
+    error = UnprocessableEntity(message='Validation error, read details', details=exc.errors()) #$ Send the  Pydantic JSON in the details.
     return _return_app_error_response(error)
 
 

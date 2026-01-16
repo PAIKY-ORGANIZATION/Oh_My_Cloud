@@ -34,9 +34,9 @@ class BadRequest(AppError):
 
 
 class UnprocessableEntity(AppError):
-    def __init__(self, details: Optional[Any] = None):
+    def __init__(self, message: str, details: Optional[Any] = None, ):
         super().__init__(
-            message='Unprocessable Entity', 
+            message=message, 
             status_code=422, 
             details=details, 
             error_code="UNPROCESSABLE_ENTITY"

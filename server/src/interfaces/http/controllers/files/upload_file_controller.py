@@ -73,10 +73,10 @@ async def upload_file_controller (
     background_tasks.add_task(process_and_upload_use_case.execute, input=input_dict) #$ Don't need to await this. It is just scheduling. FastAPI will run it when possible.
 
 
-    return {
+    return  JSONResponse(status_code=200, content={
         "success": True,
         "message": "File uploaded successfully",
         "data": {
             "file_id": file_processing_uuid,
         }
-    }
+    })

@@ -21,7 +21,7 @@ class StoreFileLocallyUseCase():
         try:
             file_size = await self.startle_file_receiver.write(file, file_processing_uuid, remaining_user_storage)
         except LimitExceededException:
-            raise UnprocessableEntity('File size limit exceeded')
+            raise UnprocessableEntity(message='File size limit exceeded')
         except Exception as e:
             raise e #$ Bubble up
         
