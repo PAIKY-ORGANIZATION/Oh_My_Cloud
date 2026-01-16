@@ -21,7 +21,6 @@ async function middleware  (request: NextRequest)  {
         return NextResponse.next()
     }
 
-
     let session: ServerResponseAuthCheck | null
 
     const authCheckService = new  AuthCheckService(internalAxiosClient)
