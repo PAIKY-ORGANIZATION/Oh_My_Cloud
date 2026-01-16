@@ -74,9 +74,5 @@ async def upload_file_controller (
 
 
     return  JSONResponse(status_code=200, content={
-        "success": True,
-        "message": "File uploaded successfully",
-        "data": {
-            "file_id": file_processing_uuid,
-        }
+        "file_id": file_processing_uuid,
     })

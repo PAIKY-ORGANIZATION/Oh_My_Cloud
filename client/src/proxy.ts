@@ -1,7 +1,7 @@
 // Using cookies
 
 import { NextRequest, NextResponse } from "next/server";
-import { dashboard_path, unexpected_error_path } from "./lib/app_paths";
+import { dashboard_path, login_path, register_path, unexpected_error_path } from "./lib/app_paths";
 import { AuthCheckService, ServerResponseAuthCheck } from "./http_services/users/auth_check_service";
 import { internalAxiosClient } from "./lib/http/internal_http_client";
 import { AppError, toAppError } from "./lib/http/app_error";
@@ -9,15 +9,16 @@ import { cookies } from "next/headers";
 
 
 const protectedRoutes = [dashboard_path]
+const unauthenticatedRoutes = [login_path, register_path] //$ Authenticated users should not be able to access these routes
 
-const unauthenticatedRoutes = ["/login", "/register"] //$ Authenticated users should not be able to access these routes
 
 async function middleware  (request: NextRequest)  {
 
+
     const currentPath = request.nextUrl.pathname //$ Will look like "/dashboard"
 
-    if (!protectedRoutes.includes(currentPath) && !unauthenticatedRoutes.includes(currentPath)){
-        //$ Cases where the target route is neither protected nor unauthenticated
+
+    if (currentPath.startsWith(unexpected_error_path) || currentPath.startsWith("/_next")){
         return NextResponse.next()
     }
 
@@ -28,6 +29,7 @@ async function middleware  (request: NextRequest)  {
     const cookieJar = await cookies()
     const authToken = cookieJar.get("AUTH_TOKEN")?.value
 
+    console.log(currentPath + " is the current path")
     //$ Try/catch and session and managed this way to keep the legacy "session" logic
     try 
     {
@@ -44,6 +46,7 @@ async function middleware  (request: NextRequest)  {
         } 
     }
 
+    console.log('KDSAKDLASJDKSAJDKAÑJDAS')
 
 
     if (protectedRoutes.includes(currentPath) && !session) {
@@ -51,7 +54,15 @@ async function middleware  (request: NextRequest)  {
     } 
 
     if (unauthenticatedRoutes.includes(currentPath) && session) {
-        return NextResponse.redirect(new URL('/', request.nextUrl))
+        return NextResponse.redirect(new URL(dashboard_path, request.nextUrl))
+    }
+
+    if (currentPath === "/"){
+        if (session){
+            return NextResponse.redirect(new URL(dashboard_path, request.nextUrl))
+        } else {
+            return NextResponse.redirect(new URL(login_path, request.nextUrl))
+        }
     }
 
     return NextResponse.next()

@@ -3,13 +3,13 @@
 
 import { FormItem, UserForm } from "@/src/shared_components/user_form"
 import { RegisterUserService } from "@/src/http_services/users/register_user_service"
-import { unexpected_error_path } from "@/src/lib/app_paths"
-import { AppError, toAppError } from "@/src/lib/http/app_error"
+import { login_path} from "@/src/lib/app_paths"
 import { remoteAxiosClient } from "@/src/lib/http/remote_http_client"
 import { validateRegisterUserData } from "@/src/schemas/user_schemas"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { toast } from "react-toast"
+import { handleFrontendHttpError } from "@/src/utils/handle_frontend_error"
 // import toast from "react-toast"
 
 
@@ -38,17 +38,10 @@ export default function Register() {
             const registerUserService = new RegisterUserService(remoteAxiosClient)
             await registerUserService.send(username, email, password)
             toast.success("User registered successfully")
-            router.push("/login")
+            router.push(login_path)
 
         } catch (e) {
-
-            console.log(e)
-            const err: AppError = toAppError(e as Error)
-            if(err.kind == "unknown" || err.kind == "network"){
-                router.push(unexpected_error_path + "/" + err.message)
-                return
-            }
-            toast.error(err.message)
+            handleFrontendHttpError(e as Error, router)
         }
     }
 
@@ -72,7 +65,7 @@ export default function Register() {
                     <FormItem name="email" type="email" label="Email" defaultValue={EMAIL_DEFAULT_VALUE}></FormItem>
                     <FormItem name="password" type="password" label="Password" defaultValue={PASSWORD_DEFAULT_VALUE}></FormItem>
                 </UserForm>
-                <Link href="/login">
+                <Link href={login_path}>
                     <p> Already have an account? <span className="text-blue-500 hover:underline"> Login</span> </p>
                 </Link>
             </div>

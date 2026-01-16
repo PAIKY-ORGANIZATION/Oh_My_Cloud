@@ -48,7 +48,7 @@ async def validation_error_handler(_request: Request, exc: RequestValidationErro
     #$ JSONResponse also uses json.dumps" so it will also fail.
     #$ jsonable_encoder converts many common FastAPI-relevant Python objects into JSON-compatible primitives. It does not guarantee correctness for arbitrary objects though.
 
-    error = UnprocessableEntity(message='Validation error, read details', details=exc.errors()) #$ Send the  Pydantic JSON in the details.
+    error = UnprocessableEntity(message='Validation error, read details', details=safe_details) #$ Send the  Pydantic JSON in the details.
     return _return_app_error_response(error)
 
 
