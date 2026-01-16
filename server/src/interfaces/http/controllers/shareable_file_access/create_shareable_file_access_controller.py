@@ -1,4 +1,3 @@
-import json
 from fastapi import Body, Depends
 from fastapi.responses import JSONResponse
 from entities.user_entity import User
@@ -18,8 +17,6 @@ async def create_shareable_file_access_controller(
     create_shareable_file_access_use_case = CreateFileAccessUseCase(
         shareable_file_access_repository=shareable_file_access_repository,
     )
-    
-    print(json.dumps(body.model_dump(), indent=4))
     shareable_file_access = await create_shareable_file_access_use_case.execute(
         user, 
         body.file_id, 

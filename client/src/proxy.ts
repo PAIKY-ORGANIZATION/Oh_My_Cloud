@@ -46,9 +46,6 @@ async function middleware  (request: NextRequest)  {
         } 
     }
 
-    console.log('KDSAKDLASJDKSAJDKAÑJDAS')
-
-
     if (protectedRoutes.includes(currentPath) && !session) {
         return NextResponse.redirect(new URL('login', request.nextUrl)) //$ Don't use the `baseUrl` here because it points to the backend's port. Instead, `request.nextUrl` will contain the current hostname.
     } 

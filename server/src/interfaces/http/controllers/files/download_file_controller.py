@@ -33,5 +33,3 @@ async def download_file_controller (
     )
 
     #? Delete the uncompressed file after the response is sent. Use a background task.
-
-    # return 'ok'

@@ -9,17 +9,22 @@ import { useRouter } from "next/navigation"
 import { filesize } from  "filesize"
 import { DeleteFileService } from "@/src/http_services/files/delete_file"
 import { handleFrontendHttpError } from "@/src/utils/handle_frontend_error"
+import { downloadFilePath } from "@/src/lib/server_paths"
+import ShareFileModal from "./share_file_modal"
 
 
 export function DashboardClientComponent ({initialUserFiles}: {initialUserFiles: UserFile []}) {
 
     const [userFiles, setUserFiles] = useState<UserFile []>(initialUserFiles)
 
+    const [shareModalOpen, setShareModalOpen] = useState(false)
+    const [selectedFileId, setSelectedFileId] = useState<string | null>(null) //$ For the modal to know which file to share
+
     const router = useRouter()
 
     async function uploadFile (e: React.ChangeEvent<HTMLInputElement>) {
         const fileList: FileList | null = e.target.files
-        if (!fileList) return
+        if ( fileList === null || fileList.length === 0) return
 
         const file = fileList[0]
 
@@ -28,7 +33,6 @@ export function DashboardClientComponent ({initialUserFiles}: {initialUserFiles:
 
         const uploadFileService = new UploadFileService(remoteAxiosClient)
         // console.log(await file.arrayBuffer()) //! Doing this, for example, will buffer the file in the browser's memory
-
 
         try{
             const {file_id} =  await uploadFileService.send(formData)
@@ -48,7 +52,6 @@ export function DashboardClientComponent ({initialUserFiles}: {initialUserFiles:
     }
 
 
-
     async function deleteFile (fileId: string) {
         const deleteFileService = new DeleteFileService(remoteAxiosClient)
         try{
@@ -60,8 +63,12 @@ export function DashboardClientComponent ({initialUserFiles}: {initialUserFiles:
         }
     }
 
+
+
     return (
         <div className="border border-green-500 p-2">
+            {shareModalOpen && selectedFileId && <ShareFileModal fileId={selectedFileId} />}  {/* //$ MODAL LOGIC */}
+            
             <div className="flex flex-col gap-4">
                 {userFiles.map((userFile) => (
                     <div key={userFile.id} className="flex gap-5">
@@ -69,20 +76,30 @@ export function DashboardClientComponent ({initialUserFiles}: {initialUserFiles:
                         <p>{filesize(userFile.original_file_size)}</p>
                         <p>{userFile.id}</p>
 
-                        <button  className="bg-red-500 hover:bg-red-400 cursor-pointer" onClick={()=>{deleteFile(userFile.id)}}>
+                        <button  className="bg-red-500 px-1 hover:bg-red-400 cursor-pointer" onClick={()=>{deleteFile(userFile.id)}}>
                             Delete 
+                        </button>
+                        <button className="bg-green-500 px-1 hover:bg-green-400 cursor-pointer">
+                            <a 
+                                download={userFile.original_file_name}  //$  Hints the browser to force a download instead of opening the file in a new tab.
+                                href={process.env.NEXT_PUBLIC_REMOTE_BACKEND_URL + downloadFilePath + "/" + userFile.id}
+                            >
+                                
+                                Download 
+                            </a>
+                        </button>
+
+                        <button className="bg-blue-500 px-1 hover:bg-blue-400 cursor-pointer" onClick={()=>{setShareModalOpen(true); setSelectedFileId(userFile.id)}}>
+                            Share
                         </button>
                     </div>
                 ))}
             </div>
-            <></>
-            <label htmlFor="upload-file" className="bg-blue-500 p-1 hover:bg-blue-600 cursor-pointer">  Upload File </label>
+            <label htmlFor="upload-file" className="bg-orange-500 p-1 hover:bg-blue-600 cursor-pointer">  Upload File </label>
             <input 
-                className="bg-blue-500 text-white p-1 hover:bg-blue-600 cursor-pointer"
                 onChange={uploadFile}
                 id="upload-file"     type="file"  multiple     hidden
             />
         </div>
     )
-
 }
