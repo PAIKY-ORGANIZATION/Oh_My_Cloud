@@ -6,7 +6,7 @@ from interfaces.http.dependencies.hash_provider import get_hasher_provider
 from interfaces.http.dependencies.user_repository_provider import get_user_repository_provider
 from interfaces.schemas.users.create_user_schemas import UserCreateRequest
 from  use_cases.users.create_user_use_case import CreateUserUseCase
-from fastapi import Depends, Body
+from fastapi import Depends, Body, Request
 
 
 
@@ -14,10 +14,15 @@ from fastapi import Depends, Body
 
 
 async def create_user_controller (
+    req: Request,
     body: UserCreateRequest = Body(...),  #$ Body(...) is used to make the body required
     hasher: BcryptHasherService = Depends(get_hasher_provider),
     user_repository: UserRepository = Depends(get_user_repository_provider)
+
 )-> JSONResponse: 
+
+    print(req.cookies)
+
 
 
     new_user: User = await CreateUserUseCase(user_repository, hasher).execute(user_data=body)

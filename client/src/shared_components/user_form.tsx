@@ -1,9 +1,9 @@
 // prettier-ignore
-export const FormItem = ({name, type, label}: {name: string, type: string, label: string}) =>{
+export const FormItem = ({name, type, label, defaultValue}: {name: string, type: string, label: string, defaultValue: string}) =>{
     return (
         <div className="flex flex-col gap-2">
             <label htmlFor={name} className="text-center"> {label}</label>
-            <input id={name} name={name} type={type} placeholder={`Type your ${name} here`} />
+            <input id={name} name={name} type={type} placeholder={`Type your ${name} here`} defaultValue={defaultValue} />
         </div>
     )
 }
@@ -25,6 +25,7 @@ export const UserForm = ({children, handleSubmit}: {children: React.ReactNode, h
             onKeyDown={handleKeyDown}
         >
             {children}
+            <button type="submit" className="bg-blue-500 text-white p-1 hover:bg-blue-600 ">Submit</button>
         </form>
     )
 }

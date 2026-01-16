@@ -16,6 +16,8 @@ async def get_auth_user_provider (
 ) -> User:
 
 
+    print(request.cookies)
+
     payload: JWTPayload = jwt_provider.verify_jwt(request.cookies.get(auth_cookie_name) or '')
     user_repo = UserRepository(session)
     user = await user_repo.find_by_id(payload['user_id'])

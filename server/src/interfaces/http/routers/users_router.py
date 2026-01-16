@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from interfaces.http.controllers.users.auth_check import auth_check_controller
+from interfaces.http.controllers.users.auth_check_controller import auth_check_controller
 from interfaces.http.controllers.users.create_user_controller import create_user_controller
 from interfaces.http.controllers.users.delete_user_controller import delete_user_controller
 from interfaces.http.controllers.users.login_controller import login_controller

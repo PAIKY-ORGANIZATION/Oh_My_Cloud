@@ -2,11 +2,10 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { dashboard_path, unexpected_error_path } from "./lib/app_paths";
-import { AuthCheckService, ServerResponseAuthCheck } from "./http_services/users/auth_check";
+import { AuthCheckService, ServerResponseAuthCheck } from "./http_services/users/auth_check_service";
 import { internalAxiosClient } from "./lib/http/internal_http_client";
 import { AppError, toAppError } from "./lib/http/app_error";
-
-
+import { cookies } from "next/headers";
 
 
 const protectedRoutes = [dashboard_path]
@@ -27,10 +26,16 @@ async function middleware  (request: NextRequest)  {
 
     const authCheckService = new  AuthCheckService(internalAxiosClient)
 
+    const cookieJar = await cookies()
+    const authToken = cookieJar.get("AUTH_TOKEN")?.value
+
     //$ Try/catch and session and managed this way to keep the legacy "session" logic
-    try {
-        session = await authCheckService.send()
-    } catch (e) {
+    try 
+    {
+        session = await authCheckService.send(authToken)
+    } catch (e) 
+    {
+
         const appError: AppError = toAppError(e as Error)
 
         if (appError.kind == "http" && appError.status === 401){
@@ -40,12 +45,14 @@ async function middleware  (request: NextRequest)  {
         } 
     }
 
-    if(protectedRoutes.includes(currentPath) && !session) {
+
+
+    if (protectedRoutes.includes(currentPath) && !session) {
         return NextResponse.redirect(new URL('login', request.nextUrl)) //$ Don't use the `baseUrl` here because it points to the backend's port. Instead, `request.nextUrl` will contain the current hostname.
     } 
 
-    if(unauthenticatedRoutes.includes(currentPath) && session) {
-        return NextResponse.redirect(new URL('dashboard', request.nextUrl))
+    if (unauthenticatedRoutes.includes(currentPath) && session) {
+        return NextResponse.redirect(new URL('/', request.nextUrl))
     }
 
     return NextResponse.next()

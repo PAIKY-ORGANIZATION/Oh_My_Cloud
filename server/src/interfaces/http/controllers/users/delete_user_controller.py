@@ -13,11 +13,10 @@ from interfaces.object_storage.object_storage_service import ObjectStorageClient
 from interfaces.schemas.users.delete_user_schemas import DeleteUserRequest
 from lib.variables import auth_cookie_name
 from use_cases.users.delete_user_use_case import DeleteUserUseCase
-from fastapi import Response, Body
+from fastapi import Body
 
 
 async def delete_user_controller(
-    response: Response,
     body: DeleteUserRequest = Body(...), #$ Body(...) is used to make the body required
     user: User = Depends(get_auth_user_provider),
     user_repository: UserRepository = Depends(get_user_repository_provider),
@@ -31,6 +30,6 @@ async def delete_user_controller(
 
     await delete_user_use_case.execute(user, body.password)
 
+    response = JSONResponse(status_code=200, content=None)
     response.delete_cookie(key=auth_cookie_name)
-
-    return JSONResponse(status_code=200, content=None)
+    return response
