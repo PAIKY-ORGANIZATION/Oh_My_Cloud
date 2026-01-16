@@ -2,7 +2,10 @@
 
 import { CreateShareableFileAccessRequestBody, CreateShareableFileAccessService, ExpirationTimeUnit } from "@/src/http_services/shareable/create_shareable_file_access_service"
 import { remoteAxiosClient } from "@/src/lib/http/remote_http_client"
+import { handleFrontendHttpError } from "@/src/utils/handle_frontend_error"
+import { useRouter } from "next/navigation"
 import { useState } from "react"
+import { toast } from "react-toast"
 
 export default function  ShareFileModal({fileId}: {fileId: string}) {
 
@@ -10,7 +13,7 @@ export default function  ShareFileModal({fileId}: {fileId: string}) {
     const [showPasswordInput, setShowPasswordInput] = useState<boolean>(false)
     const [showExpirationTimeInput, setShowExpirationTimeInput] = useState<boolean>(false)
 
-
+    const router = useRouter()
 
     async function createShareableFileAccess(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault()
@@ -22,6 +25,10 @@ export default function  ShareFileModal({fileId}: {fileId: string}) {
         const expirationTimeUnit = formData.get('unit') as ExpirationTimeUnit | null
         const expiresWhenOpened = formData.get('expires_when_opened') as boolean | null
 
+        if (showPasswordInput && (!password || password.length < 8)) {
+            toast.error("Password must be at least 8 characters long")
+            return
+        }
 
         const createShareableFileAccessRequestBody: CreateShareableFileAccessRequestBody = {
             file_id: fileId,
@@ -33,17 +40,19 @@ export default function  ShareFileModal({fileId}: {fileId: string}) {
         }
 
         const createShareableFileAccessService = new CreateShareableFileAccessService(remoteAxiosClient)
+
         try{
             const result = await createShareableFileAccessService.send(createShareableFileAccessRequestBody)
+            toast.success("Shareable file access created successfully")
         }catch(e){
-            console.log(e);	
+            handleFrontendHttpError(e as Error, router)
         }
     }
 
 
     return (
         <div className="fixed inset-0 z-50 bg-black/50 flex justify-center items-center">
-            <div className="bg-[#131313] border border-[#202020] rounded  flex flex-col w-[90vw] max-w-[420px] min-h-[300px]">
+            <div className="bg-[#131313] border border-[#202020] rounded  flex flex-col w-[90vw] max-w-[420px] min-h-[300px] p-2">
                 <p>Share File Modal {fileId} </p>
                 <form onSubmit={createShareableFileAccess} className="flex flex-col gap-2">
                     <button 
@@ -71,7 +80,10 @@ export default function  ShareFileModal({fileId}: {fileId: string}) {
                     {showExpirationTimeInput && (
                         <div className="flex gap-2 items-center">
                             <label>Expiration Time</label>
-                            <input required type="number" name="expiration_time_amount" placeholder="Number of units" className="border border-gray-300 rounded"/>
+                            <input 
+                                required type="number" name="expiration_time_amount" placeholder="Number of units" defaultValue={1} 
+                                className="border border-gray-300 rounded"
+                            />
                             <select name="unit">
                                 <option value="m">Minutes</option>
                                 <option value="h">Hours</option>
@@ -82,8 +94,9 @@ export default function  ShareFileModal({fileId}: {fileId: string}) {
                     )}
                     <div className="flex gap-2 items-center">
                         <label htmlFor="expires_when_opened"> Expires when opened</label>
-                        <input required type="checkbox" name="expires_when_opened" id="expires_when_opened" />
+                        <input type="checkbox" name="expires_when_opened" id="expires_when_opened" />
                     </div>
+                    <button type="submit" className="bg-green-600 px-1  cursor-pointer">Create Shareable File Access</button>
                 </form>
             </div>
         </div>
