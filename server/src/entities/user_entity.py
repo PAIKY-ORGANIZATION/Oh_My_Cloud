@@ -18,7 +18,7 @@ class User(Base):
     __tablename__ = "users"
 
 
-    ENTITY_STORAGE_LIMIT_BYTES = 100 * 1024 * 1024 # 100 MB
+    ENTITY_STORAGE_LIMIT_BYTES = 100 * 1024 * 1024  # 100 MB
 
     id: Mapped[str] = mapped_column( primary_key=True,  init=False,  default_factory=lambda: str(uuid.uuid4())) #$ `default_factory` is created at __init__ time while `default` is created when flushing/committing.
     user_name: Mapped[str] = mapped_column(String, nullable=False)

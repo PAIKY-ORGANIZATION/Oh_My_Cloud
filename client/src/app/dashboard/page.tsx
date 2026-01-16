@@ -2,21 +2,27 @@ import { GetUserFileListService } from "@/src/http_services/files/get_user_file_
 import { internalAxiosClient } from "@/src/lib/http/internal_http_client"
 import { cookies } from "next/headers"
 import { DashboardClientComponent } from "./dashboard_client_component"
+import { AppError, toAppError } from "@/src/lib/http/app_error"
+import { redirect } from "next/navigation"
+import { unexpected_error_path } from "@/src/lib/app_paths"
+
 
 export default  async function Dashboard (){
     
     const cookieJar = await cookies()
     const authToken = cookieJar.get("AUTH_TOKEN")?.value
-
         
     const getUserFilesService = new GetUserFileListService(internalAxiosClient)
-    const userFiles = await getUserFilesService.send(authToken)
-    
-    
-    
-    
+
+    let userFiles
+    try{
+        userFiles = await getUserFilesService.send(authToken)
+    }catch(e){
+        const err: AppError = toAppError(e as Error)
+        redirect(unexpected_error_path + "/" + err.message) //$ this automatically returns
+    }
+
     return (
         <DashboardClientComponent initialUserFiles={userFiles}></DashboardClientComponent>
     )
-
 }
