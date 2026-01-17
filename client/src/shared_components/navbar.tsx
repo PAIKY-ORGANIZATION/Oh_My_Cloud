@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { deleteUserCookies } from "../app/actions/delete_user_cookies"
+import { deleteUserCookies } from "../actions/delete_user_cookies"
 import { useRouter } from "next/navigation"
 import { login_path } from "../lib/app_paths"
 import { DeleteAccountService } from "../http_services/users/delete_account_service"
