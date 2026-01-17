@@ -1,7 +1,9 @@
-from pydantic import BaseModel, ConfigDict
+# from pydantic import BaseModel, ConfigDict
 
-class DeleteUserRequest(BaseModel):
+# class DeleteUserRequest(BaseModel):
 
-    model_config = ConfigDict(extra="forbid")
+#     model_config = ConfigDict(extra="forbid")
 
-    password: str
+#     password: str
+
+#! A header will handle the password.

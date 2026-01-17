@@ -64,8 +64,8 @@ export default function Register() {
     let USERNAME_DEFAULT_VALUE: string = "";
     if(process.env.NODE_ENV === "development"){
         EMAIL_DEFAULT_VALUE = "dev_test@email.com"
-        PASSWORD_DEFAULT_VALUE = "dev_test_password"
         USERNAME_DEFAULT_VALUE = "dev_test_username"
+        PASSWORD_DEFAULT_VALUE = "12345678"
     }
 
     

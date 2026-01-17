@@ -14,9 +14,11 @@ export default function  Navbar() {
 
 
     const {userSession, setUserSession} = useAuthContext()
-
+    const [writePasswordModalOpen, setWritePasswordModalOpen] = useState<boolean>(false)
     const router = useRouter()
+    const [password, setPassword] = useState<string>("")
 
+    
     const [userOptionsOpen, setUserOptionsOpen] = useState<boolean>(false)
 
     async function logout () {
@@ -28,13 +30,14 @@ export default function  Navbar() {
     }
 
 
-    async function deleteAccount () {
+    async function deleteAccount (password: string) {
         try{
             const deleteAccountService = new DeleteAccountService(remoteAxiosClient)
-            await deleteAccountService.send()
+            await deleteAccountService.send(password)
 
             await deleteUserCookies()
             setUserSession(null)
+            setWritePasswordModalOpen(false)
             router.push(login_path)
         }catch(e){
             handleFrontendHttpError(e as Error, router)
@@ -57,7 +60,7 @@ export default function  Navbar() {
                         {userOptionsOpen && (
                             <div className="absolute w-40 bg-[#474747] p-2">
                                 <button className="cursor-pointer hover:bg-[#373737] p-1" onClick={()=>{logout()}}> Logout </button>
-                                <button className="cursor-pointer hover:bg-[#373737] p-1" onClick={()=>{deleteAccount()}}> Delete account </button>
+                                <button className="cursor-pointer hover:bg-[#373737] p-1" onClick={()=>{setWritePasswordModalOpen(true)}}> Delete account </button>
                             </div>
                         )}
                     </>
@@ -66,6 +69,21 @@ export default function  Navbar() {
                 }
             </div>
             
+            {writePasswordModalOpen && (
+                <div className="fixed inset-0 z-50 bg-black/50 flex justify-center items-center">
+                    <div className="bg-[#131313] border border-[#202020] rounded  flex flex-col w-[90vw] max-w-[420px] min-h-[300px] p-2">
+                        <p>Write your password to delete your account</p>
+                        <input type="password" placeholder="Password" value={password} onChange={(e)=>{setPassword(e.target.value)}} />
+                        <button 
+                            className="bg-red-500 px-1 hover:bg-red-400 cursor-pointer"
+                            onClick={()=>{deleteAccount(password)}}
+                        >
+                            Delete account
+                        </button>
+                        <button className="bg-blue-500 px-1 hover:bg-blue-400 cursor-pointer" onClick={()=>{setWritePasswordModalOpen(false)}}> Cancel </button>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }

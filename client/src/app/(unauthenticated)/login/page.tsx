@@ -49,7 +49,7 @@ export default function Login() {
     let PASSWORD_DEFAULT_VALUE: string = "";
     if(process.env.NODE_ENV === "development"){
         EMAIL_DEFAULT_VALUE = "dev_test@email.com"
-        PASSWORD_DEFAULT_VALUE = "dev_test_password"
+        PASSWORD_DEFAULT_VALUE = "12345678"
     }
 
 
