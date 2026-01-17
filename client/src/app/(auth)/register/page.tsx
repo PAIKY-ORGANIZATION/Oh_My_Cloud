@@ -19,8 +19,7 @@ export default function Register() {
     const router = useRouter()
 
     async function  generateSafePassword () {
-        const password = generate({ length: 16, upperCase: true, lowerCase: true, numeric: true, special: true });
-        console.log(password);
+        const password = generate({ length: 24, upperCase: true, lowerCase: true, numeric: true, special: true });
         await navigator.clipboard.writeText(password)
         toast.success("Password copied to clipboard!")
     }
