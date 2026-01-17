@@ -1,7 +1,7 @@
 // prettier-ignore
 export const FormItem = ({name, type, label, defaultValue}: {name: string, type: string, label: string, defaultValue: string}) =>{
     return (
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 bg-[#000000]">
             <label htmlFor={name} className="text-center"> {label}</label>
             <input id={name} name={name} type={type} placeholder={`Type your ${name} here`} defaultValue={defaultValue} />
         </div>

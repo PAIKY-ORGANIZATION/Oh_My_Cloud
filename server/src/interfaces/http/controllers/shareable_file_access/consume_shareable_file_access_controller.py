@@ -26,7 +26,6 @@ async def consume_shareable_file_access_controller (
     shareable_file_access_repository: ShareableFileAccessRepository = Depends(get_shareable_file_access_repository_provider),
 ):
     
-
     consume_file_access_use_case = ConsumeFileAccessUseCase(
         shareable_file_access_repository=shareable_file_access_repository,
         object_storage_provider=object_storage_provider,

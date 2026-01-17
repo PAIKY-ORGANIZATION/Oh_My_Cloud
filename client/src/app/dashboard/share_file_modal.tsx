@@ -43,9 +43,9 @@ export default function  ShareFileModal({fileId,  setShareModalOpen}: {fileId: s
 
         try{
             const {path_to_shareable_file_access} = await createShareableFileAccessService.send(createShareableFileAccessRequestBody)
-            toast.success("Success! Shareable file access link copied to clipboard");
             const link_to_shareable_file_access = process.env.NEXT_PUBLIC_REMOTE_BACKEND_URL + path_to_shareable_file_access
             await navigator.clipboard.writeText(link_to_shareable_file_access) //$ Attaching the link to the clipboard
+            toast.success("Success! Shareable file access link copied to clipboard");
             setShareModalOpen(false)
         }catch(e){
             handleFrontendHttpError(e as Error, router)

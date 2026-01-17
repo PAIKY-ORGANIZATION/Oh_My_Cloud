@@ -42,3 +42,5 @@ class User(Base):
             "email": self.email
         }
     #? Could implement a "to_user_summary_dto", it's seems like a common pattern
+
+
