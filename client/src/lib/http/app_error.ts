@@ -29,11 +29,12 @@ export function toAppError(err: Error): AppError {
 
         
         const data: StandardBackendErrorData = err.response?.data
-
+        const routeNotFound = err.response?.status === 404
+        const message = routeNotFound ? "Route not found" : (data.message || "An unknown error occurred from server") //$ Might be useful to debug the internalAxiosClient.
         return {
             kind: "http",
             code: data.code,
-            message: data.message || "An unknown error occurred from server",
+            message,
             status: err.response?.status  || 500
         }
     }

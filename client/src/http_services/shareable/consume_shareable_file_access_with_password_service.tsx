@@ -1,11 +1,10 @@
-import { consumeShareableFileAccessWithPasswordPath } from "@/src/lib/server_paths";
 import { AxiosInstance } from "axios";
 
 export class ConsumeShareableFileAccessWithPasswordService {
     constructor (private httpClient: AxiosInstance) {}
 
     async send (shareableFileAccessId: string, password: string) {
-        const response = await this.httpClient.get<Blob>(consumeShareableFileAccessWithPasswordPath + "/" + shareableFileAccessId, 
+        const response = await this.httpClient.get<Blob>("/shareable" + "/" + shareableFileAccessId, 
             {
                 responseType: "blob", //$ Required to download the file as a blob
                 headers: {
