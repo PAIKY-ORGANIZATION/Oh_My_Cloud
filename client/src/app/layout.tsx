@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ToastContainerClient from "../shared_components/toast_container_client";
 import Navbar from "../shared_components/navbar";
+import AuthContextProvider from "../shared_components/context/auth_content_provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -21,16 +22,18 @@ export const metadata: Metadata = {
 
 
 
-  //$  Next will inject the client's currently loaded page in `children`
-  //! Avoid using "<Home>" directly since it will always be loaded.
+//$  Next will inject the client's currently loaded page in `children`
+//! Avoid using "<Home>" directly since it will always be loaded.
 export default function RootLayout({ children}: Readonly<{children: React.ReactNode;}>) {
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <div className="h-[100vh] flex flex-col bg-[#1b1b1b]">
-          <Navbar></Navbar>
-          {children}
-        </div>
+        <AuthContextProvider>
+          <div className="h-[100vh] flex flex-col bg-[#1b1b1b]">
+            <Navbar></Navbar>
+            {children}
+          </div>
+        </AuthContextProvider>
         <ToastContainerClient />
       </body>
     </html>

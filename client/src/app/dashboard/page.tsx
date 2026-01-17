@@ -9,13 +9,13 @@ import { unexpected_error_path } from "@/src/lib/app_paths"
 
 export default  async function Dashboard (){
     
-    const cookieJar = await cookies()
-    const authToken = cookieJar.get("AUTH_TOKEN")?.value
-        
+    
     const getUserFilesService = new GetUserFileListService(internalAxiosClient)
-
+    
     let userFiles
     
+    const cookieJar = await cookies()
+    const authToken = cookieJar.get("AUTH_TOKEN")?.value
     try{
         userFiles = await getUserFilesService.send(authToken)
     }catch(e){

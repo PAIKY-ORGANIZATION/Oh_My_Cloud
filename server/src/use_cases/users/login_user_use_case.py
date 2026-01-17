@@ -24,5 +24,7 @@ class LoginUserUseCase():
 
         if not password_match: raise Unauthorized(message='Invalid email or password')
         
-        return self.jwt_provider.generate_jwt(user_id=existing_user_with_email.id)
+        token = self.jwt_provider.generate_jwt(user_id=existing_user_with_email.id)
+
+        return token, existing_user_with_email
         

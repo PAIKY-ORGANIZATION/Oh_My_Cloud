@@ -4,18 +4,17 @@ import { remoteAxiosClient } from "@/src/lib/http/remote_http_client"
 import { createContext, Dispatch, SetStateAction, useContext, useEffect, useState } from "react"
 
 
-type UserSession =  ServerResponseAuthCheck | null
 
 type AuthContextType = {
-    userSession: UserSession
-    setUserSession: Dispatch<SetStateAction<UserSession | null>>
+    userSession: ServerResponseAuthCheck | null
+    setUserSession: Dispatch<SetStateAction<ServerResponseAuthCheck | null>>
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 export default function AuthContextProvider ({children}: {children: React.ReactNode}) {
 
-    const [userSession, setUserSession] = useState<UserSession | null>(null)
+    const [userSession, setUserSession] = useState<ServerResponseAuthCheck | null>(null)
 
     useEffect(()=>{
         const fetchUserSession = async () => {

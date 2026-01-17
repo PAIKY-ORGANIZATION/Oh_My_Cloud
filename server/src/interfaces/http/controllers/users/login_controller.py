@@ -1,4 +1,4 @@
-from fastapi import Depends, Response
+from fastapi import Depends
 from fastapi.responses import JSONResponse
 from interfaces.db.repositories.user_repository import UserRepository
 from interfaces.hashing.bcrypt_hasher_service import BcryptHasherService
@@ -12,14 +12,13 @@ from use_cases.users.login_user_use_case import LoginUserUseCase
 
 async def login_controller (
     body: UserLoginRequest, 
-    # response: Response, 
     hasher: BcryptHasherService = Depends(get_hasher_provider),
     jwt: JWTService = Depends(get_jwt_provider),
     user_repository: UserRepository = Depends(get_user_repository_provider)
 )-> JSONResponse:
 
 
-    token: str = await LoginUserUseCase(user_repository, hasher, jwt).execute(user_data=body)
-    response = JSONResponse(status_code=200, content=None, )
+    token, user = await LoginUserUseCase(user_repository, hasher, jwt).execute(user_data=body)
+    response = JSONResponse(status_code=200, content=user.to_dto(), )
     response.set_cookie(key=auth_cookie_name, value=token, httponly=True,)
     return response

@@ -10,12 +10,12 @@ import { toast } from "react-toast"
 import { useRouter } from "next/navigation" 
 import { register_path } from "@/src/lib/app_paths"
 import { handleFrontendHttpError } from "@/src/utils/handle_frontend_error"
-
+import { useAuthContext } from "@/src/shared_components/context/auth_content_provider"
 
 export default function Login() {
 
-
     const router = useRouter()
+    const {setUserSession} = useAuthContext()
 
     const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -35,8 +35,8 @@ export default function Login() {
         
         try{
             const loginUserService = new LoginUserService(remoteAxiosClient)
-            await loginUserService.send(email, password)
-            
+            const userSession = await loginUserService.send(email, password)
+            setUserSession(userSession)
             toast.success("Login successful")
             router.push("/dashboard")
         }catch(e){
