@@ -10,7 +10,7 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { toast } from "react-toast"
 import { handleFrontendHttpError } from "@/src/utils/handle_frontend_error"
-import { GeneratePassword, GenerateOptions } from "js-generate-password"
+import { generate } from "@wcj/generate-password";
 
 
 
@@ -19,8 +19,8 @@ export default function Register() {
     const router = useRouter()
 
     async function  generateSafePassword () {
-        const options: GenerateOptions = {length: 16, lowercase: true, uppercase: true, numbers: true, symbols: true}
-        const password = GeneratePassword(options)
+        const password = generate({ length: 16, upperCase: true, lowerCase: true, numeric: true, special: true });
+        console.log(password);
         await navigator.clipboard.writeText(password)
         toast.success("Password copied to clipboard!")
     }
@@ -80,7 +80,9 @@ export default function Register() {
                     <FormItem name="password" type="password" label="Password" defaultValue={PASSWORD_DEFAULT_VALUE}></FormItem>
                     <div className="flex gap-2 items-center">
                         <FormItem name="confirm_password" type="password" label="ConfirmPassword" defaultValue={PASSWORD_DEFAULT_VALUE}/>
-                        <button type="button" className="bg-blue-500 cursor-pointer">Autogenerate Safe Password</button>
+                        <button type="button" onClick={generateSafePassword} className="bg-blue-500 cursor-pointer">
+                            Autogenerate Safe Password
+                        </button>
                     </div>
                 </UserForm>
                 <Link href={login_path}>
