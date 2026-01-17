@@ -1,1 +1,2 @@
 DATABASE_URL_PARTIAL=
+FRONTEND_BASE_URL= # For redirecting to introduce password for protected shareable file

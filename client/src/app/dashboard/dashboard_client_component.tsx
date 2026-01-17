@@ -67,7 +67,9 @@ export function DashboardClientComponent ({initialUserFiles}: {initialUserFiles:
 
     return (
         <div className="border border-green-500 p-2">
-            {shareModalOpen && selectedFileId && <ShareFileModal fileId={selectedFileId} />}  {/* //$ MODAL LOGIC */}
+            {shareModalOpen && selectedFileId && 
+                <ShareFileModal fileId={selectedFileId} setShareModalOpen={setShareModalOpen} />
+            }  {/* //$ MODAL LOGIC */}
             
             <div className="flex flex-col gap-4">
                 {userFiles.map((userFile) => (

@@ -17,7 +17,7 @@ export type CreateShareableFileAccessRequestBody = {
 }
 
 type CreateShareableFileAccessResponse = {
-    shareable_file_access_id: string
+    path_to_shareable_file_access: string
 }
 
 export class CreateShareableFileAccessService {

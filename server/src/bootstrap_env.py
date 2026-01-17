@@ -12,7 +12,8 @@ required_env_variables = [
     "OBJECT_STORAGE_SECRET_ACCESS_KEY",
     "OBJECT_STORAGE_REGION",
     "OBJECT_STORAGE_ENDPOINT_URL",
-    "OBJECT_STORAGE_BUCKET_NAME"
+    "OBJECT_STORAGE_BUCKET_NAME",
+    "FRONTEND_BASE_URL",
 ]
 
 def load_env_from_local_files():

@@ -1,3 +1,5 @@
+import os
+from typing import cast
 from fastapi import Depends, Request
 from interfaces.db.repositories.shareable_file_access_repository import ShareableFileAccessRepository
 from interfaces.http.dependencies.shareable_file_access_repository_provider import get_shareable_file_access_repository_provider
@@ -33,18 +35,14 @@ async def consume_shareable_file_access_controller (
         file_repository=file_repository,
     )
 
-
-    incoming_password = request.headers.get("Authorization")
-    try:
-        if incoming_password: incoming_password = incoming_password.split(" ")[1]
-    except Exception as e:
-        raise Unauthorized("You must send a valid Bearer token")	#$ Avoids crashes when extracting a badly formatted token.
-    
+    #! Don't use "Authorization" (Beater) because it indicates that it's a short-lived, ephemeral token (even though you  can  technically use it for any kind of authentication)
+    incoming_password = request.headers.get("X-File-Password") #$ "X-" is a convention for non-standard, application-specific headers.
 
     try:
         file_id, file_name = await consume_file_access_use_case.execute(shareable_file_access_id, incoming_password)
     except NeedsRedirect:
-        return RedirectResponse(url=f"/shareable/protected/{shareable_file_access_id}") #? This doesn't exist yet. It needs to be an actual interactive page.
+        redirect_url = f"{cast(str, os.environ.get("FRONTEND_BASE_URL"))}/unlock_shareable_file_access/{shareable_file_access_id}" #! This will only work with a frontend.
+        return RedirectResponse(url=redirect_url)
     except Exception as e:
         raise e #$ Bubble up
     

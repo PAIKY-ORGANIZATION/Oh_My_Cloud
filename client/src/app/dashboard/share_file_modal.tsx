@@ -4,10 +4,10 @@ import { CreateShareableFileAccessRequestBody, CreateShareableFileAccessService,
 import { remoteAxiosClient } from "@/src/lib/http/remote_http_client"
 import { handleFrontendHttpError } from "@/src/utils/handle_frontend_error"
 import { useRouter } from "next/navigation"
-import { useState } from "react"
+import { Dispatch, SetStateAction, useState } from "react"
 import { toast } from "react-toast"
 
-export default function  ShareFileModal({fileId}: {fileId: string}) {
+export default function  ShareFileModal({fileId,  setShareModalOpen}: {fileId: string, setShareModalOpen: Dispatch<SetStateAction<boolean>>}) {
 
 
     const [showPasswordInput, setShowPasswordInput] = useState<boolean>(false)
@@ -36,14 +36,17 @@ export default function  ShareFileModal({fileId}: {fileId: string}) {
             expiration_time: showExpirationTimeInput ? 
                 {amount: expirationTimeAmount as number, unit: expirationTimeUnit as ExpirationTimeUnit} 
                 : null,
-                expires_when_opened: expiresWhenOpened as boolean
+            expires_when_opened: expiresWhenOpened || false
         }
 
         const createShareableFileAccessService = new CreateShareableFileAccessService(remoteAxiosClient)
 
         try{
-            const result = await createShareableFileAccessService.send(createShareableFileAccessRequestBody)
-            toast.success("Shareable file access created successfully")
+            const {path_to_shareable_file_access} = await createShareableFileAccessService.send(createShareableFileAccessRequestBody)
+            toast.success("Success! Shareable file access link copied to clipboard");
+            const link_to_shareable_file_access = process.env.NEXT_PUBLIC_REMOTE_BACKEND_URL + path_to_shareable_file_access
+            await navigator.clipboard.writeText(link_to_shareable_file_access) //$ Attaching the link to the clipboard
+            setShareModalOpen(false)
         }catch(e){
             handleFrontendHttpError(e as Error, router)
         }
@@ -58,6 +61,7 @@ export default function  ShareFileModal({fileId}: {fileId: string}) {
                     <button 
                         onClick={()=>{setShowPasswordInput(!showPasswordInput)}}
                         className="bg-blue-500 px-1 hover:bg-blue-400 cursor-pointer"
+                        type="button" //$ For preventing the form from being submitted when the button is clicked
                     > 
                         {showPasswordInput ? "Cancel" : "Requires Password?"}
                     </button>
@@ -73,6 +77,7 @@ export default function  ShareFileModal({fileId}: {fileId: string}) {
                     <button 
                         onClick={()=>{setShowExpirationTimeInput(!showExpirationTimeInput)}}
                         className="bg-blue-500 px-1 hover:bg-blue-400 cursor-pointer"
+                        type="button" //$ For preventing the form from being submitted when the button is clicked
                     > 
                         {showExpirationTimeInput ? "Cancel" : "Requires Expiration Time?"}
                     </button>
@@ -97,6 +102,13 @@ export default function  ShareFileModal({fileId}: {fileId: string}) {
                         <input type="checkbox" name="expires_when_opened" id="expires_when_opened" />
                     </div>
                     <button type="submit" className="bg-green-600 px-1  cursor-pointer">Create Shareable File Access</button>
+                    <button 
+                        onClick={()=>{setShareModalOpen(false)}} 
+                        className="bg-red-600 px-1  cursor-pointer" 
+                        type="button" //$ For preventing the form from being submitted when the button is clicked
+                    >
+                        Cancel
+                    </button>
                 </form>
             </div>
         </div>

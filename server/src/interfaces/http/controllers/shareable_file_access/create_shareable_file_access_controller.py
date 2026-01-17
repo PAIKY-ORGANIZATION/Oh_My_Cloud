@@ -24,5 +24,10 @@ async def create_shareable_file_access_controller(
         body.expires_when_opened,
         password=body.password,
     )
+
+
+    path_to_shareable_file_access = f"/shareable/{shareable_file_access.id}"
     
-    return JSONResponse(status_code=201, content=shareable_file_access.id)
+    return JSONResponse(status_code=201, content={
+        "path_to_shareable_file_access": path_to_shareable_file_access,
+    })
