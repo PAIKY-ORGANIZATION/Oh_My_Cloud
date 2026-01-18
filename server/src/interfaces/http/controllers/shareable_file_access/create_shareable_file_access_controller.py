@@ -17,7 +17,7 @@ async def create_shareable_file_access_controller(
     create_shareable_file_access_use_case = CreateFileAccessUseCase(
         shareable_file_access_repository=shareable_file_access_repository,
     )
-    shareable_file_access = await create_shareable_file_access_use_case.execute(
+    shareable_file_access_id = await create_shareable_file_access_use_case.execute(
         user, 
         body.file_id, 
         body.expiration_time, 
@@ -26,7 +26,7 @@ async def create_shareable_file_access_controller(
     )
 
 
-    path_to_shareable_file_access = f"/shareable/{body.file_id}"
+    path_to_shareable_file_access = f"/shareable/{shareable_file_access_id}"
     
     return JSONResponse(status_code=201, content={
         "path_to_shareable_file_access": path_to_shareable_file_access,
