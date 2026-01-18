@@ -1,7 +1,7 @@
 
 "use client"
 
-import { FormItem, UserForm } from "@/src/shared_components/user_form"
+import { FormItem, UserForm } from "@/src/components/shared_compoenents/user_form"
 import { LoginUserService } from "@/src/http_services/users/login_user_service"
 import { remoteAxiosClient } from "@/src/lib/http/remote_http_client"
 import { validateLoginUserData } from "@/src/schemas/user_schemas"
@@ -10,7 +10,7 @@ import { toast } from "react-toast"
 import { useRouter } from "next/navigation" 
 import { register_path } from "@/src/lib/app_paths"
 import { handleFrontendHttpError } from "@/src/utils/handle_frontend_error"
-import { useAuthContext } from "@/src/shared_components/context/auth_content_provider"
+import { useAuthContext } from "@/src/components/context/auth_content_provider"
 
 export default function Login() {
 

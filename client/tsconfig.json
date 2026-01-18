@@ -31,6 +31,6 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "**/*.mts"
-  ],
+, "src/components/one_use_components.tsx/navbar"  ],
   "exclude": ["node_modules"]
 }
