@@ -29,7 +29,6 @@ async function middleware  (request: NextRequest)  {
     const cookieJar = await cookies()
     const authToken = cookieJar.get("AUTH_TOKEN")?.value
 
-    console.log(currentPath + " is the current path")
     //$ Try/catch and session and managed this way to keep the legacy "session" logic
     try 
     {
@@ -54,13 +53,13 @@ async function middleware  (request: NextRequest)  {
         return NextResponse.redirect(new URL(dashboard_path, request.nextUrl))
     }
 
-    if (currentPath === "/"){
-        if (session){
-            return NextResponse.redirect(new URL(dashboard_path, request.nextUrl))
-        } else {
-            return NextResponse.redirect(new URL(login_path, request.nextUrl))
-        }
-    }
+    // if (currentPath === "/"){
+    //     if (session){
+    //         return NextResponse.redirect(new URL(dashboard_path, request.nextUrl))
+    //     } else {
+    //         return NextResponse.redirect(new URL(login_path, request.nextUrl))
+    //     }
+    // }  //! ALREADY DID LANDING PAGE.
 
     return NextResponse.next()
 
