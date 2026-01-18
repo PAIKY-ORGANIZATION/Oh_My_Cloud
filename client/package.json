@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev-local": "ENVIRONMENT=local next dev -p 4000",
+    "dev-local": "ENVIRONMENT=local next dev",
     "build-local": "ENVIRONMENT=local next build",
-    "start-local": "ENVIRONMENT=local next start -4000",
+    "start-local": "ENVIRONMENT=local next start",
     "lint": "eslint"
   },
   "dependencies": {

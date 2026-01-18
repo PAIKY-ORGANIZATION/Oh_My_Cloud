@@ -1,7 +1,7 @@
 
 "use client"
 
-import { FormItem, UserForm } from "@/src/components/shared_compoenents/user_form"
+import { FormItem, UserForm } from "@/src/components/shared_compoenents/user_form/simple_user_form_element"
 import { LoginUserService } from "@/src/http_services/users/login_user_service"
 import { remoteAxiosClient } from "@/src/lib/http/remote_http_client"
 import { validateLoginUserData } from "@/src/schemas/user_schemas"
