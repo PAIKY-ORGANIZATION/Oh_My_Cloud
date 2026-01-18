@@ -44,12 +44,3 @@ class StartleFileReceiverService():
         loop = asyncio._get_running_loop()
         return await loop.run_in_executor(thread_pool, self._write_file_sync, file, file_processing_uuid, limit_bytes)
     
-
-
-
-
-
-
-    # def get_file_size(self, file_processing_uuid: str) -> int:
-    #     output_file_path_and_name = get_temp_uncompressed_file_path(file_processing_uuid)
-    #     return os.path.getsize(output_file_path_and_name)

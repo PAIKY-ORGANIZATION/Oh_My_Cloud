@@ -3,7 +3,6 @@ from typing import cast
 from fastapi import Depends, Request
 from interfaces.db.repositories.shareable_file_access_repository import ShareableFileAccessRepository
 from interfaces.http.dependencies.shareable_file_access_repository_provider import get_shareable_file_access_repository_provider
-from interfaces.http.exceptions.custom_exception_instances import Unauthorized
 from interfaces.http.dependencies.object_storage_provider import get_object_storage_provider
 from interfaces.http.dependencies.gzip_provider import get_gzip_provider
 from interfaces.http.dependencies.cryptography_provider import get_cryptography_provider
