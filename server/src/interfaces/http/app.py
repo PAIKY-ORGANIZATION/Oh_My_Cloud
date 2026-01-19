@@ -1,3 +1,4 @@
+import os
 from fastapi import FastAPI
 from fastapi.exceptions import RequestValidationError
 from interfaces.http.exceptions.custom_exception_instances  import AppError
@@ -25,11 +26,15 @@ app.exception_handler(Exception)(global_exception_handler)
 app.exception_handler(AppError)(app_error_handler)
 
 
+
+frontend_base_url = os.environ.get("FRONTEND_BASE_URL", "").strip()
+
 app.add_middleware(
     CORSMiddleware,
     # allow_origins=["http://localhost:3000"],
     # allow_origins=["http://localhost:4000"],
-    allow_origins=["*"],
+    # allow_origins=["*"],
+    allow_origins=[frontend_base_url],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
