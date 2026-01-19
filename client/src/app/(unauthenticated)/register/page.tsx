@@ -12,6 +12,7 @@ import { toast } from "react-toast"
 import { handleFrontendHttpError } from "@/src/utils/handle_frontend_error"
 import { generate } from "@wcj/generate-password";
 import SimpleRegister from "./client_component/elements/simple_register_element"
+import ExtendedRegister from "./client_component/elements/extended_register_element"
 
 
 
@@ -72,7 +73,7 @@ export default function Register() {
     
 
     return (
-        <SimpleRegister 
+        <ExtendedRegister 
             handleSubmit={handleSubmit} 
             USERNAME_DEFAULT_VALUE={USERNAME_DEFAULT_VALUE} 
             EMAIL_DEFAULT_VALUE={EMAIL_DEFAULT_VALUE} 
