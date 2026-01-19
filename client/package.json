@@ -11,6 +11,10 @@
     "build-docker-local": "ENVIRONMENT=docker_local next build",
     "start-docker-local": "ENVIRONMENT=docker_local next start",
 
+    "dev-docker-cloud": "ENVIRONMENT=docker_cloud next dev",
+    "build-docker-cloud": "ENVIRONMENT=docker_cloud next build",
+    "start-docker-cloud": "ENVIRONMENT=docker_cloud next start",
+
     "lint": "eslint"
   },
   "dependencies": {
