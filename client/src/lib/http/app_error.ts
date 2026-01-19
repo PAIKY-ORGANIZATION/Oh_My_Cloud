@@ -41,3 +41,4 @@ export function toAppError(err: Error): AppError {
 
     return {kind: "unknown", message: err.message}
 }
+

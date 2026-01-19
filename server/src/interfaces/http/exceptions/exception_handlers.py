@@ -23,6 +23,7 @@ def _return_app_error_response(exc: AppError) -> JSONResponse:
         # "success": False, #$ This is redundant because the status code already exists
     }
 
+
     return JSONResponse(
         status_code=exc.status_code,
         content=content

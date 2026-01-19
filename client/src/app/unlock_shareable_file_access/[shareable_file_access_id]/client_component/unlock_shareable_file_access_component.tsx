@@ -5,7 +5,8 @@ import { remoteAxiosClient } from "@/src/lib/http/remote_http_client"
 import { handleFrontendHttpError } from "@/src/utils/handle_frontend_error"
 import { useRouter } from "next/navigation"
 import { toast } from "react-toast"
-import SimpleUnlockShareableFileAccessElement from "./elements/simple_unlock_shareable_file_access_element"
+import ExtendedUnlockShareableFileAccessElement from "./elements/extended_unlock_shareable_file_access_element"
+import { isAxiosError } from "axios"
 
 export default function  UnlockShareableFileAccessClientComponent({shareableFileAccessId}: {shareableFileAccessId: string}) {
     
@@ -31,6 +32,12 @@ export default function  UnlockShareableFileAccessClientComponent({shareableFile
             fileName = data.fileName
             
         }catch(e){
+            if (isAxiosError(e) && e.response?.data instanceof Blob) { //$ This is only needed here because "consumeShareableFileAccessWithPasswordService" asks for a blob, but if there is an error, the error data will also come as a blob and needs to be parsed.
+                const text = await e.response.data.text()
+                const data = JSON.parse(text)
+                toast.error(data.message || "An unknown error occurred from server")
+                return
+            }
             handleFrontendHttpError(e as Error, router)
             return
         }
@@ -48,7 +55,7 @@ export default function  UnlockShareableFileAccessClientComponent({shareableFile
     
     
     return (
-        <SimpleUnlockShareableFileAccessElement
+        <ExtendedUnlockShareableFileAccessElement
             downloadFile={downloadFile} 
             shareableFileAccessId={shareableFileAccessId}
         />
