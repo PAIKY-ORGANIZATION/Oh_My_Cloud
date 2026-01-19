@@ -1,57 +1,17 @@
 "use client"
 
-import { CreateShareableFileAccessRequestBody, CreateShareableFileAccessService, ExpirationTimeUnit } from "@/src/http_services/shareable/create_shareable_file_access_service"
-import { remoteAxiosClient } from "@/src/lib/http/remote_http_client"
-import { handleFrontendHttpError } from "@/src/utils/handle_frontend_error"
-import { useRouter } from "next/navigation"
-import { Dispatch, SetStateAction, useState } from "react"
-import { toast } from "react-toast"
+type SimpleModalProps = {
+    fileId: string
+    setShowPasswordInput: (showPasswordInput: boolean) => void
+    showPasswordInput: boolean
+    setShowExpirationTimeInput: (showExpirationTimeInput: boolean) => void
+    showExpirationTimeInput: boolean
+    createShareableFileAccess: (e: React.FormEvent<HTMLFormElement>) => void
+    setShareModalOpen: (shareModalOpen: boolean) => void
+}
 
-export default function  ShareFileModal({fileId,  setShareModalOpen}: {fileId: string, setShareModalOpen: Dispatch<SetStateAction<boolean>>}) {
-
-
-    const [showPasswordInput, setShowPasswordInput] = useState<boolean>(false)
-    const [showExpirationTimeInput, setShowExpirationTimeInput] = useState<boolean>(false)
-
-    const router = useRouter()
-
-    async function createShareableFileAccess(e: React.FormEvent<HTMLFormElement>) {
-        e.preventDefault()
-        const formElement = e.currentTarget  //$ This is the actual <form> element
-        const formData = new  FormData(formElement)  //$ `new FormData` accepts an `HTMLFormElement` in its constructor.
-
-        const password = formData.get('password') as string | null
-        const expirationTimeAmount = formData.get('expiration_time_amount') as number | null
-        const expirationTimeUnit = formData.get('unit') as ExpirationTimeUnit | null
-        const expiresWhenOpened = formData.get('expires_when_opened') as boolean | null
-
-        if (showPasswordInput && (!password || password.length < 8)) {
-            toast.error("Password must be at least 8 characters long")
-            return
-        }
-
-        const createShareableFileAccessRequestBody: CreateShareableFileAccessRequestBody = {
-            file_id: fileId,
-            password: password,
-            expiration_time: showExpirationTimeInput ? 
-                {amount: expirationTimeAmount as number, unit: expirationTimeUnit as ExpirationTimeUnit} 
-                : null,
-            expires_when_opened: expiresWhenOpened || false
-        }
-
-        const createShareableFileAccessService = new CreateShareableFileAccessService(remoteAxiosClient)
-
-        try{
-            const {path_to_shareable_file_access} = await createShareableFileAccessService.send(createShareableFileAccessRequestBody)
-            const link_to_shareable_file_access = process.env.NEXT_PUBLIC_REMOTE_BACKEND_URL + path_to_shareable_file_access
-            await navigator.clipboard.writeText(link_to_shareable_file_access) //$ Attaching the link to the clipboard
-            toast.success("Success! Shareable file access link copied to clipboard");
-            setShareModalOpen(false)
-        }catch(e){
-            handleFrontendHttpError(e as Error, router)
-        }
-    }
-
+export default function  SimpleModal(props: SimpleModalProps) {
+    const {fileId, setShowPasswordInput, showPasswordInput, setShowExpirationTimeInput, showExpirationTimeInput, createShareableFileAccess, setShareModalOpen} = props
 
     return (
         <div className="fixed inset-0 z-50 bg-black/50 flex justify-center items-center">

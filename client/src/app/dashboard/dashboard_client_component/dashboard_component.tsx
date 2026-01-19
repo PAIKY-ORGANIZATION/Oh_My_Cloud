@@ -10,8 +10,9 @@ import { filesize } from  "filesize"
 import { DeleteFileService } from "@/src/http_services/files/delete_file"
 import { handleFrontendHttpError } from "@/src/utils/handle_frontend_error"
 import { downloadFilePath } from "@/src/lib/server_paths"
-import ShareFileModal from "./elements/modal/share_file_modal"
-import SimpleDashboard from "./elements/dashboard/simple_dashboard_element"
+import ShareFileModal from "../modal_component/share_file_modal"
+import SimpleDashboard from "./elements/simple_dashboard_element"
+import ExtendedDashboard from "./elements/extended_dashboard_element"
 
 
 export function DashboardClientComponent ({initialUserFiles}: {initialUserFiles: UserFile []}) {
@@ -67,7 +68,7 @@ export function DashboardClientComponent ({initialUserFiles}: {initialUserFiles:
 
 
     return (
-        <SimpleDashboard
+        <ExtendedDashboard
             userFiles={userFiles}
             setShareModalOpen={setShareModalOpen}
             setSelectedFileId={setSelectedFileId}
