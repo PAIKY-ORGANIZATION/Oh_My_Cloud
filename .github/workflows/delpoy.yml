@@ -38,6 +38,7 @@ jobs:
             #* === CURRENTLY USING HETZNER SETTINGS ===
 
             #* Server vars
+            
             echo "OBJECT_STORAGE_ACCESS_KEY_ID=${{ secrets.HETZNER_OBJECT_STORAGE_ACCESS_KEY_ID }}" >> ./server/config/shared.env
             echo "OBJECT_STORAGE_REGION=${{ secrets.HETZNER_OBJECT_STORAGE_REGION }}" >> ./server/config/shared.env
             echo "OBJECT_STORAGE_SECRET_ACCESS_KEY=${{ secrets.HETZNER_OBJECT_STORAGE_SECRET_ACCESS_KEY }}" >> ./server/config/shared.env
@@ -50,7 +51,7 @@ jobs:
 
             #* Client vars
             echo "NEXT_PUBLIC_REMOTE_BACKEND_URL=${{vars.NEXT_PUBLIC_REMOTE_BACKEND_URL }}" >> ./client/config/docker_cloud.env #! VAR
-            echo "INTERNAL_BACKEND_URL=${{ vars.INTERNAL_BACKEND_URL }}" >> ./client/config/docker_cloud.env #! VAR
+            echo "INTERNAL_BACKEND_URL=${{ secrets.INTERNAL_BACKEND_URL }}" >> ./client/config/docker_cloud.env
 
             #* ========== Docker commands ============
             
