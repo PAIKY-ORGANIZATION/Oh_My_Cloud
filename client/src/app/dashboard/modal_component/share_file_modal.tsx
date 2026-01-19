@@ -56,8 +56,7 @@ export default function  ShareFileModal({fileId,  setShareModalOpen}: {fileId: s
 
 
     return (
-        <
-        ExtendedModal
+        <ExtendedModal
             fileId={fileId}
             setShowPasswordInput={setShowPasswordInput}
             showPasswordInput={showPasswordInput}

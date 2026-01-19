@@ -3,7 +3,7 @@
 import { createPortal } from "react-dom"
 import Link from "next/link"
 import { login_path } from "../../../../lib/app_paths"
-import { NavbarProps } from "./_navbar_props"
+import { NavbarProps } from "./simple_navbar_element"
 
 
 
