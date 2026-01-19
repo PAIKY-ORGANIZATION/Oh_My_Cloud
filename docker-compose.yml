@@ -29,6 +29,7 @@ services:
       timeout: 5s
       retries: 10
     
+    
   frontend:
     build: ./client
     ports:
