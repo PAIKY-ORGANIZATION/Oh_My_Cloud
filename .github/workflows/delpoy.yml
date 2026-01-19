@@ -33,7 +33,7 @@ jobs:
             git merge origin/master
 
             #! Removing all previous env files(important)
-            rm      ./server/config/docker_cloud.env ./server/config/shared.env         rm ./client/config/docker_cloud.env ./client/config/shared.env
+            rm      ./server/config/docker_cloud.env ./server/config/shared.env          ./client/config/docker_cloud.env ./client/config/shared.env
             
             #* === CURRENTLY USING HETZNER SETTINGS ===
 
