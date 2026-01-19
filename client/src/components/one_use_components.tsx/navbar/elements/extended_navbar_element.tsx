@@ -21,9 +21,6 @@ export default function  NavbarExtended({
     deleteAccount,
 }: NavbarProps) {
 
-
-
-
     const deleteAccountModal = writePasswordModalOpen ? (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4">
             <div className="w-full max-w-[420px] rounded-lg border border-white/10 bg-[#131313] p-5 shadow-2xl">
@@ -65,7 +62,6 @@ export default function  NavbarExtended({
             </div>
         </div>
     ) : null
-
 
     return (
         <>

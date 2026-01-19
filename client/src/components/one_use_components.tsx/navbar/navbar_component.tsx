@@ -9,7 +9,6 @@ import { remoteAxiosClient } from "../../../lib/http/remote_http_client"
 import { handleFrontendHttpError } from "../../../utils/handle_frontend_error"
 import { useAuthContext } from "../../context/auth_content_provider"
 import NavbarExtended from "./elements/extended_navbar_element"
-import NavbarSimple from "./elements/simple_navbar_element"
 
 export default function  Navbar() {
 
