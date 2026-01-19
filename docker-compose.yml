@@ -11,7 +11,8 @@ services:
       # - /app/temp #$ Only if using :ro in ./server:/app
     depends_on:
       - postgres
-    command: sh -c "DEV=False ENVIRONMENT=docker_local python3 ./src/main.py"
+    # command: sh -c "DEV=False ENVIRONMENT=docker_local python3 ./src/main.py"
+    command: sh -c "sleep infinity"
 
   postgres:
     image: postgres
