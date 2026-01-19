@@ -37,4 +37,4 @@ class CreateFileAccessUseCase():
 
         await self.shareable_file_access_repository.save(shareable_file_access)
         
-        return shareable_file_access
+        return shareable_file_access.id

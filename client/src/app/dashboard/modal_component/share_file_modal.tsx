@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation"
 import { Dispatch, SetStateAction, useState } from "react"
 import { toast } from "react-toast"
 import SimpleModal from "./elements/simple_modal_component"
+import ExtendedModal from "./elements/extended_modal_component"
 
 export default function  ShareFileModal({fileId,  setShareModalOpen}: {fileId: string, setShareModalOpen: Dispatch<SetStateAction<boolean>>}) {
 
@@ -56,7 +57,7 @@ export default function  ShareFileModal({fileId,  setShareModalOpen}: {fileId: s
 
     return (
         <
-            SimpleModal
+        ExtendedModal
             fileId={fileId}
             setShowPasswordInput={setShowPasswordInput}
             showPasswordInput={showPasswordInput}
