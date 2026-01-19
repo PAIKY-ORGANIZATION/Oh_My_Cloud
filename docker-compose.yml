@@ -3,9 +3,9 @@ services:
     build: ./server
     ports: 
       - "3012:3001"
-    env_file:
-      - ./server/config/shared.env
-      - ./server/config/docker_local.env
+    # env_file:
+    #   - ./server/config/shared.env
+    #   - ./server/config/docker_local.env
     volumes:
       - ./server:/app:ro #$ Deliberately also included  everything outside src for more flexibility.
       - /app/temp
