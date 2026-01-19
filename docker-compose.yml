@@ -11,8 +11,8 @@ services:
       # - /app/temp #$ Only if using :ro in ./server:/app
     depends_on:
       - postgres
-    # command: sh -c "DEV=False ENVIRONMENT=docker_local python3 ./src/main.py"
-    command: sh -c "sleep infinity"
+    command: sh -c "DEV=False ENVIRONMENT=docker_cloud python3 ./src/main.py"
+    # command: sh -c "sleep infinity" #$ For debugging without the container shutting down on App crash.
 
   postgres:
     image: postgres
@@ -34,3 +34,4 @@ services:
     depends_on:
       - backend
     command: "npm run start-docker-local" #$ This command replaces the "CMD" in the "dockerfile".
+    # command: sh -c "sleep infinity" #$ For debugging without the container shutting down on App crash.
