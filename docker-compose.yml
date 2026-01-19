@@ -23,7 +23,6 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: oh_my_cloud
     
-    
   frontend:
     build: ./client
     ports:
