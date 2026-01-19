@@ -1,16 +1,14 @@
 
 "use client"
 
-import { FormItem, UserForm } from "@/src/components/shared_compoenents/user_form/simple_user_form_element"
 import { LoginUserService } from "@/src/http_services/users/login_user_service"
 import { remoteAxiosClient } from "@/src/lib/http/remote_http_client"
 import { validateLoginUserData } from "@/src/schemas/user_schemas"
-import Link from "next/link"
 import { toast } from "react-toast"
 import { useRouter } from "next/navigation" 
-import { register_path } from "@/src/lib/app_paths"
 import { handleFrontendHttpError } from "@/src/utils/handle_frontend_error"
 import { useAuthContext } from "@/src/components/context/auth_content_provider"
+import SimpleLogin from "./client_component/elements/simple_login_element"
 
 export default function Login() {
 
@@ -52,18 +50,8 @@ export default function Login() {
         PASSWORD_DEFAULT_VALUE = "12345678"
     }
 
-
     return (
-        <div className="h-full w-full items-center  border-red-500 border flex justify-center">
-            <div className="border border-green-500 p-1">
-                <UserForm handleSubmit={handleSubmit}>
-                    <FormItem name="email" type="email" label="Email" defaultValue={EMAIL_DEFAULT_VALUE}></FormItem>
-                    <FormItem name="password" type="password" label="Password" defaultValue={PASSWORD_DEFAULT_VALUE}></FormItem>
-                </UserForm>
-                <Link href={register_path}>
-                    <p> Don&apos;t have an account? <span className="text-blue-500 hover:underline"> Sign up</span> </p>
-                </Link>
-            </div>
-        </div>
+        <SimpleLogin handleSubmit={handleSubmit} EMAIL_DEFAULT_VALUE={EMAIL_DEFAULT_VALUE} PASSWORD_DEFAULT_VALUE={PASSWORD_DEFAULT_VALUE} />
     )
+
 }
