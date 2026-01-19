@@ -8,7 +8,7 @@ services:
     #   - ./server/config/docker_local.env
     volumes:
       - ./server:/app #$ Deliberately also included  everything outside src for more flexibility.
-      - /app/temp
+      # - /app/temp #$ Only if using :ro in ./server:/app
     depends_on:
       - postgres
     command: sh -c "DEV=False ENVIRONMENT=docker_local python3 ./src/main.py"
