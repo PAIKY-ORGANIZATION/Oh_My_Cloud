@@ -32,5 +32,3 @@ services:
     depends_on:
       - backend
     command: "npm run start-docker-local" #$ This command replaces the "CMD" in the "dockerfile".
-
-    z

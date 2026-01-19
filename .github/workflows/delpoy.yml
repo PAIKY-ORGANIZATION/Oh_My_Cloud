@@ -1,51 +1,58 @@
-# name: Deploy
+name: Deploy
 
-# on:
-#   push:
-#     branches: [master]
+on:
+  push:
+    branches: [master]
 
 
-# jobs:
-#   deploy:
-#     runs-on: ubuntu-latest
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
 
-#     steps:
-#       - name: Deploy over ssh
-#         uses: appleboy/ssh-action@v1.0,0
-#         with:
-#           host: ${{ vars.PAID_CLOUD_HOST}}
-#           username: ${{secrets.HETZNER_USER}}
-#           key: ${{secrets.HETZNER_SSH_PRIVATE_KEY}}
-#           passphrase: ${{ secrets.PRIVATE_KEY_PASSPHRASE }} #$ Only if required.
+    steps:
+      - name: Deploy over ssh
+        uses: appleboy/ssh-action@v1.0,0
+        with:
+          host: ${{ vars.PAID_CLOUD_HOST }}
+          username: ${{ secrets.HETZNER_USER }}
+          key: ${{ secrets.HETZNER_SSH_PRIVATE_KEY }}
+          passphrase: ${{ secrets.PRIVATE_KEY_PASSPHRASE }} #$ Only if required.
 
-#           script: |
-#             UNIQUE_APP_NAME="${{ vars.UNIQUE_APP_NAME }}"   #! UNIQUE_APP_NAME must be all lowercase and without underscores for Docker to accept it.
-#             #! UNIQUE_APP_NAME must be set per-repository for docker-compose.
-#             #! If you are using Docker COMPOSE,  you don't need a unique app name for the image name. However, you still need a unique directory name.
+          script: |
+            UNIQUE_APP_NAME="${{ vars.UNIQUE_APP_NAME }}"   #! UNIQUE_APP_NAME must be all lowercase and without underscores for Docker to accept it.
+            #! UNIQUE_APP_NAME must be set per-repository for docker-compose.
+            #! If you are using Docker COMPOSE,  you don't need a unique app name for the image name. However, you still need a unique directory name.
 
-#             REPO_PATH="${{github.repository}}"
+            REPO_PATH="${{github.repository}}"
 
-#             cd ~vsCodeMain
-#             [ -d "$UNIQUE_APP_NAME/.git" ] || git clone git@github.com:$REPO_PATH.git  "$UNIQUE_APP_NAME" #! YOU NEED TO USE A KEY THAT HAS NO PASSPHRASE
+            cd ~vsCodeMain
+            [ -d "$UNIQUE_APP_NAME/.git" ] || git clone git@github.com:$REPO_PATH.git  "$UNIQUE_APP_NAME" #! YOU NEED TO USE A KEY THAT HAS NO PASSPHRASE
 
-#             cd "$UNIQUE_APP_NAME"
-#             git fetch
-#             git merge origin/master
+            cd "$UNIQUE_APP_NAME"
+            git fetch
+            git merge origin/master
 
-#             #! Removing all previous env files(important)
-#             rm      ./server/config/docker_cloud.env ./server/config/shared.env         rm ./client/config/docker_cloud.env ./client/config/shared.env
+            #! Removing all previous env files(important)
+            rm      ./server/config/docker_cloud.env ./server/config/shared.env         rm ./client/config/docker_cloud.env ./client/config/shared.env
             
-#             #* === CURRENTLY USING HETZNER SETTINGS ===
+            #* === CURRENTLY USING HETZNER SETTINGS ===
 
-#             #* Server vars
-#             echo "OBJECT_STORAGE_ACCESS_KEY_ID=${{secrets.HETZNER_OBJECT_STORAGE_ACCESS_KEY_ID}}" >> ./server/config/shared.env
-#             echo "OBJECT_STORAGE_REGION=${{secrets.HETZNER_OBJECT_STORAGE_REGION}}" >> ./server/config/shared.env
-#             echo "OBJECT_STORAGE_SECRET_ACCESS_KEY=${{secrets.HETZNER_OBJECT_STORAGE_SECRET_ACCESS_KEY}}" >> ./server/config/shared.env
-#             echo "OBJECT_STORAGE_ENDPOINT_URL=${{secrets.OBJECT_STORAGE_ENDPOINT_URL}}" >> ./server/config/shared.env #! Only required by Hetzner
-#             echo "OBJECT_STORAGE_BUCKET_NAME=${{secrets.HETZNER_OBJECT_STORAGE_BUCKET_NAME}}" >> ./server/config/shared.env
-#             echo "DATABASE_URL_PARTIAL=${{secrets.DATABASE_URL_PARTIAL}}" >> ./server/config/docker_cloud.env #! Currently just using a Postgres db in the docker-compose so this could be not a secret.
-#             echo "JWT_SECRET=${{secrets.JWT_SECRET}}" >> ./server/config/shared.env
-#             echo "ENCRYPTION_KEY=${{secrets.ENCRYPTION_KEY}}" >> ./server/config/shared.env
-#             echo "FRONTEND_BASE_URL=${{vars.FRONTEND_BASE_URL}}" >> ./server/config/docker_cloud.env #! VAR
+            #* Server vars
+            echo "OBJECT_STORAGE_ACCESS_KEY_ID=${{ secrets.HETZNER_OBJECT_STORAGE_ACCESS_KEY_ID }}" >> ./server/config/shared.env
+            echo "OBJECT_STORAGE_REGION=${{ secrets.HETZNER_OBJECT_STORAGE_REGION }}" >> ./server/config/shared.env
+            echo "OBJECT_STORAGE_SECRET_ACCESS_KEY=${{ secrets.HETZNER_OBJECT_STORAGE_SECRET_ACCESS_KEY }}" >> ./server/config/shared.env
+            echo "OBJECT_STORAGE_ENDPOINT_URL=${{ secrets.OBJECT_STORAGE_ENDPOINT_URL }}" >> ./server/config/shared.env #! Only required by Hetzner
+            echo "OBJECT_STORAGE_BUCKET_NAME=${{ secrets.HETZNER_OBJECT_STORAGE_BUCKET_NAME }}" >> ./server/config/shared.env
+            echo "DATABASE_URL_PARTIAL=${{ secrets.DATABASE_URL_PARTIAL }}" >> ./server/config/docker_cloud.env #! Currently just using a Postgres db in the docker-compose so this could be not a secret.
+            echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> ./server/config/shared.env
+            echo "ENCRYPTION_KEY=${{ secrets.ENCRYPTION_KEY }}" >> ./server/config/shared.env
+            echo "FRONTEND_BASE_URL=${{vars.FRONTEND_BASE_URL }}" >> ./server/config/docker_cloud.env #! VAR
 
-#             #* Client vars
+            #* Client vars
+            echo "NEXT_PUBLIC_REMOTE_BACKEND_URL=${{vars.NEXT_PUBLIC_REMOTE_BACKEND_URL }}" >> ./client/config/docker_cloud.env #! VAR
+            echo "INTERNAL_BACKEND_URL=${{ vars.INTERNAL_BACKEND_URL }}" >> ./client/config/docker_cloud.env #! VAR
+
+            #* ========== Docker commands ============
+            
+            docker compose down
+            sudo docker compose up --build -d
