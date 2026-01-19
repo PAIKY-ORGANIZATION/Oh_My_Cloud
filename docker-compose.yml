@@ -8,6 +8,7 @@ services:
       - ./server/config/docker_local.env
     volumes:
       - ./server:/app:ro #$ Deliberately also included  everything outside src for more flexibility.
+      - 
     depends_on:
       - postgres
 
@@ -25,8 +26,9 @@ services:
     ports:
       - "3013:3000"
     volumes:
-      - ./client:/app:ro #$ Deliberately also included  everything outside src for more flexibility.
+      - ./client:/app #$ Deliberately also included  everything outside src for more flexibility. Also removed ":ro" for NextJS being able to  write to the .next directory on development mode.
     depends_on:
       - backend
+    command: "npm run dev-docker-local"
 
     

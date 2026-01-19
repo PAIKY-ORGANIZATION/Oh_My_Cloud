@@ -7,6 +7,7 @@
     "build-local": "ENVIRONMENT=local next build",
     "start-local": "ENVIRONMENT=local next start",
 
+    "dev-docker-local": "ENVIRONMENT=docker_local next dev", 
     "build-docker-local": "ENVIRONMENT=docker_local next build",
     "start-docker-local": "ENVIRONMENT=docker_local next start",
 
