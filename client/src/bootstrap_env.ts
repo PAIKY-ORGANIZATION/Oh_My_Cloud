@@ -12,8 +12,8 @@ const requiredEnvVars: string[] = [
 ]
 
 function loadENV (){
-    dotenv.config({path: `./config/${environment}_private.env`})
-    dotenv.config({path:  `./config/${environment}_public.env`})
+    dotenv.config({path: `./config/${environment}.env`})
+    dotenv.config({path:  `./config/${environment}.env`})
 
     for (const env of requiredEnvVars) {
         if(!process.env[env]){

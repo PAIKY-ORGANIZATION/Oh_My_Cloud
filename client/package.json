@@ -6,6 +6,9 @@
     "dev-local": "ENVIRONMENT=local next dev",
     "build-local": "ENVIRONMENT=local next build",
     "start-local": "ENVIRONMENT=local next start",
+
+    "build-docker-local": "ENVIRONMENT=docker_local next build",
+
     "lint": "eslint"
   },
   "dependencies": {
