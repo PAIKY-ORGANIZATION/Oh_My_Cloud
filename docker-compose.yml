@@ -12,7 +12,7 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-    command: sh -c "DEV=False ENVIRONMENT=docker_cloud python3 ./src/main.py"
+    command: sh -c "DEV=False ENVIRONMENT=docker_cloud python3 ./src/main.py"  #¡ CHANGE TO "docker-local" IF YOU ARE USING LOCAL ENVIRONMENT VARIABLES.
     # command: sh -c "sleep infinity" #$ For debugging without the container shutting down on App crash.
 
   postgres:
@@ -38,5 +38,5 @@ services:
       - /app/.next #$ Preventing local ".next/" build to be mirrored in the container. It was giving me issues with env vars that were set in the local build also being set in the container.
     depends_on:
       - backend
-    command: "npm run start-docker-local" #$ This command replaces the "CMD" in the "dockerfile".
+    command: "npm run start-docker-local"  #¡ CHANGE TO "build-docker-local" IF YOU ARE USING LOCAL ENVIRONMENT VARIABLES..
     # command: sh -c "sleep infinity" #$ For debugging without the container shutting down on App crash.

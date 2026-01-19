@@ -8,8 +8,8 @@ RUN npm i
 
 COPY . .
 
-RUN npm run build-docker-local
+RUN npm run build-docker-cloud #¡ CHANGE TO "build-docker-local" IF YOU ARE USING LOCAL ENVIRONMENT VARIABLES.
 
-CMD ["npm", "run", "start-docker-local"] #¡ May have replaced this in the "docker-compose.yml". Don't modify this CMD, if you  want flexibility, change it in the "docker-compose.yml" so that you can change the command without having to rebuild the image.
+CMD ["npm", "run", "start-docker-cloud"] #¡ May have replaced this in the "docker-compose.yml". Don't modify this CMD, if you  want flexibility, change it in the "docker-compose.yml" so that you can change the command without having to rebuild the image.
 
 # CMD ["npm", "run", "dev-docker-local"]
