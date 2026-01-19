@@ -8,7 +8,7 @@ import { toast } from "react-toast"
 import { useRouter } from "next/navigation" 
 import { handleFrontendHttpError } from "@/src/utils/handle_frontend_error"
 import { useAuthContext } from "@/src/components/context/auth_content_provider"
-import SimpleLogin from "./client_component/elements/simple_login_element"
+import ExtendedLogin from "./client_component/elements/extended_login_element"
 
 export default function Login() {
 
@@ -30,7 +30,6 @@ export default function Login() {
             return
         }
 
-        
         try{
             const loginUserService = new LoginUserService(remoteAxiosClient)
             const userSession = await loginUserService.send(email, password)
@@ -40,7 +39,6 @@ export default function Login() {
         }catch(e){
             handleFrontendHttpError(e as Error, router)
         }
-
     }
 
     let EMAIL_DEFAULT_VALUE: string = "";
@@ -51,7 +49,11 @@ export default function Login() {
     }
 
     return (
-        <SimpleLogin handleSubmit={handleSubmit} EMAIL_DEFAULT_VALUE={EMAIL_DEFAULT_VALUE} PASSWORD_DEFAULT_VALUE={PASSWORD_DEFAULT_VALUE} />
+        <ExtendedLogin 
+            handleSubmit={handleSubmit} 
+            EMAIL_DEFAULT_VALUE={EMAIL_DEFAULT_VALUE} 
+            PASSWORD_DEFAULT_VALUE={PASSWORD_DEFAULT_VALUE}
+        />
     )
 
 }
