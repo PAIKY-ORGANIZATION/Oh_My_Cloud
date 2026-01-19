@@ -2,7 +2,7 @@
 
 import { downloadFilePath } from "@/src/lib/server_paths";
 import { filesize } from "filesize";
-import ShareFileModal from "./share_file_modal";
+import ShareFileModal from "../modal/share_file_modal";
 import { UserFile } from "@/src/http_services/files/get_user_file_list_service";
 import { SetStateAction } from "react";
 import { Dispatch } from "react";
