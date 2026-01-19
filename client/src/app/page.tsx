@@ -26,19 +26,14 @@ export default function Home() {
               href="/register"
               className="rounded-full bg-zinc-900 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-zinc-900/20 transition hover:-translate-y-0.5 hover:bg-zinc-800 dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-200"
             >
-              Start secure upload
+              Go to Dashboard
             </Link>
+
             <Link
               href="/login"
-              className="rounded-full border border-zinc-200 bg-white px-6 py-3 text-sm font-semibold text-zinc-700 shadow-sm transition hover:-translate-y-0.5 hover:border-zinc-300 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-200 dark:hover:border-zinc-600"
-            >
-              See how sharing works
-            </Link>
-            <Link
-              href="/dashboard"
               className="text-sm font-semibold text-zinc-700 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white"
             >
-              Go to dashboard
+              Login
             </Link>
           </div>
         </div>

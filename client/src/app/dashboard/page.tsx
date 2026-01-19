@@ -1,7 +1,7 @@
 import { GetUserFileListService } from "@/src/http_services/files/get_user_file_list_service"
 import { internalAxiosClient } from "@/src/lib/http/internal_http_client"
 import { cookies } from "next/headers"
-import { DashboardClientComponent } from "./dashboard_client_component"
+import { DashboardClientComponent } from "./client_component/dashboard_component"
 import { AppError, toAppError } from "@/src/lib/http/app_error"
 import { redirect } from "next/navigation"
 import { unexpected_error_path } from "@/src/lib/app_paths"
