@@ -2,17 +2,28 @@
 
 ### Running locally
 (Loads environment variables from ./config/local.env and ./config/shared.env)
+`ENVIRONMENT=local python3 `
 
-    `
-        ENVIRONMENT=local python3 ./src/main.py    
-    `
+### Running in docker (locally, URLs often set to "localhost")
+(Loads environment variables from ./config/docker_local.env and ./config/shared.env)
+`ENVIRONMENT=docker_local`
 
-### Running with docker compose
-No need to specify an ENVIRONMENT, the ENV's are loaded on the compose (backend > env_file)
 
-    `
-        python3 ./src/main.py
-    `
+### Production vs Development mode
+To choose between reload=True/False for `uvicorn.run()` use:
+- `DEV=1`     for   reload=True
+- `DEV=<Anything else>` for reload=False
+You explicitly  need to pass the  `DEV` env.
+
+
+##  Run example
+`
+    DEV=0 ENVIRONMENT=docker_local python3  src/main.py
+` 
+
+
+
+
 
 # Top level packages 
     Will be declared in requirements.in 

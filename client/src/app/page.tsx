@@ -12,7 +12,7 @@ export default function Home() {
 
           <div className="space-y-4">
             <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">
-              Secret-service security for your files, with a lovable touch
+              Security for your files
             </h1>
             <p className="max-w-2xl text-lg text-zinc-600 dark:text-zinc-300">
               Military-grade encryption, intelligent compression, and resilient cloud
@@ -65,7 +65,7 @@ export default function Home() {
         <div className="mt-16 rounded-3xl border border-zinc-200 bg-linear-to-r from-zinc-900 via-zinc-800 to-zinc-900 p-8 text-white shadow-xl dark:border-zinc-800">
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <div>
-              <h3 className="text-2xl font-semibold">Share files like a pro.</h3>
+              <h3 className="text-2xl font-semibold">Share files anonymously.</h3>
               <p className="mt-2 text-sm text-zinc-200">
                 Password-protected access, expiring links, and audit-ready
                 visibility are built in.

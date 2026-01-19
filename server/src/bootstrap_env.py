@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 
 
 required_env_variables = [
+    "DEV", #$ True/False for "reload" in uvicorn.run()
     "DATABASE_URL_PARTIAL",
     "JWT_SECRET",
     "ENCRYPTION_KEY",
@@ -18,7 +19,7 @@ required_env_variables = [
 
 def load_env_from_local_files():
     load_dotenv("./config/shared.env")
-    load_dotenv("./config/local.env")
+    load_dotenv(f"./config/{os.environ.get('ENVIRONMENT')}.env")
 
 
 def validate_env():

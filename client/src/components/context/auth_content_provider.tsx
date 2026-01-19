@@ -18,6 +18,7 @@ export default function AuthContextProvider ({children}: {children: React.ReactN
 
     useEffect(()=>{
         const fetchUserSession = async () => {
+
             const authCheckService = new AuthCheckService(remoteAxiosClient)
             try{
                 const userSession = await authCheckService.send(undefined)

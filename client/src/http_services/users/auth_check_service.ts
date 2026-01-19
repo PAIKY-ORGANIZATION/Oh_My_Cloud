@@ -10,9 +10,7 @@ export interface ServerResponseAuthCheck extends ServerResponse {
 
 
 export class AuthCheckService {
-
     constructor(private httpClient: AxiosInstance){}
-
     async send(token: string | undefined): Promise<ServerResponseAuthCheck | null> {
         const {data} = await this.httpClient.get<ServerResponseAuthCheck>(authCheckPath, 
             {

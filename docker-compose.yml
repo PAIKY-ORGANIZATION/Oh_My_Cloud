@@ -11,6 +11,7 @@ services:
       - /app/temp
     depends_on:
       - postgres
+    command: sh -c "DEV=False ENVIRONMENT=docker_local python3 ./src/main.py"
 
   postgres:
     image: postgres
@@ -27,8 +28,9 @@ services:
       - "3013:3000"
     volumes:
       - ./client:/app #$ Deliberately also included  everything outside src for more flexibility. Also removed ":ro" for NextJS being able to  write to the .next directory on development mode.
+      - /app/.next #$ Preventing local ".next/" build to be mirrored in the container. It was giving me issues with env vars that were set in the local build also being set in the container.
     depends_on:
       - backend
-    command: "npm run dev-docker-local"
+    command: "npm run start-docker-local" #$ This command replaces the "CMD" in the "dockerfile".
 
     
