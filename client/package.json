@@ -8,6 +8,7 @@
     "start-local": "ENVIRONMENT=local next start",
 
     "build-docker-local": "ENVIRONMENT=docker_local next build",
+    "start-docker-local": "ENVIRONMENT=docker_local next start",
 
     "lint": "eslint"
   },
