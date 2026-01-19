@@ -13,33 +13,34 @@ export default async function UnexpectedErrorPage({params}: Params) {
   const {error_message} = await params
 
   return (
-    <main className="flex-1 grid place-items-center px-6">
-      <div className="w-full max-w-md rounded-2xl border border-white/10 bg-white/5 p-6 shadow-xl">
-        <div className="flex items-start gap-3">
-          <div className="grid size-10 place-items-center rounded-xl border border-white/10 bg-linear-to-br from-cyan-400/20 to-fuchsia-400/20 text-white font-semibold">
-            !
-          </div>
-
-          <div className="min-w-0">
-            <h1 className="text-lg font-semibold text-white">
-              Unexpected server side error occurred
+    <div className="min-h-screen bg-zinc-50 text-zinc-900 dark:bg-black dark:text-zinc-100">
+      <main className="mx-auto flex min-h-screen w-full max-w-5xl flex-col items-center justify-center px-6 py-16">
+        <div className="w-full max-w-lg rounded-3xl border border-zinc-200 bg-white p-8 shadow-xl dark:border-zinc-800 dark:bg-zinc-900">
+          <div className="mb-6 space-y-2 text-center">
+            <h1 className="text-2xl font-semibold tracking-tight">
+              Unexpected server error
             </h1>
-            <p className="mt-1 text-sm text-white/70">
+            <p className="text-sm text-zinc-600 dark:text-zinc-300 wrap-break-word">
               {decodeURIComponent(error_message)}
             </p>
           </div>
-        </div>
 
-        <div className="mt-5 flex gap-3">
-
-          <Link
-            href="/"
-            className="rounded-xl bg-blue-500 px-4 py-2 text-sm font-semibold text-white"
-          >
-            Home
-          </Link>
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            <Link
+              href="/"
+              className="rounded-full bg-zinc-900 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-zinc-900/20 transition hover:-translate-y-0.5 hover:bg-zinc-800 dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-200"
+            >
+              Back to home
+            </Link>
+            <Link
+              href="/login"
+              className="text-sm font-semibold text-zinc-700 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white"
+            >
+              Go to login
+            </Link>
+          </div>
         </div>
-      </div>
-    </main>
+      </main>
+    </div>
   );
 }
