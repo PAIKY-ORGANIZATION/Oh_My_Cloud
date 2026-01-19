@@ -18,7 +18,7 @@ async function middleware  (request: NextRequest)  {
     const currentPath = request.nextUrl.pathname //$ Will look like "/dashboard"
 
 
-    if (currentPath.startsWith(unexpected_error_path) || currentPath.startsWith("/_next")){
+    if (currentPath.startsWith(unexpected_error_path) || currentPath.startsWith("/_next") || currentPath == "/"){
         return NextResponse.next()
     }
 

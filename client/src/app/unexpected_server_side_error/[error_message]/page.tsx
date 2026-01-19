@@ -32,12 +32,6 @@ export default async function UnexpectedErrorPage({params}: Params) {
             >
               Back to home
             </Link>
-            <Link
-              href="/login"
-              className="text-sm font-semibold text-zinc-700 transition hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white"
-            >
-              Go to login
-            </Link>
           </div>
         </div>
       </main>
