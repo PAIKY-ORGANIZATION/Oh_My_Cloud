@@ -5,6 +5,7 @@ import { remoteAxiosClient } from "@/src/lib/http/remote_http_client"
 import { handleFrontendHttpError } from "@/src/utils/handle_frontend_error"
 import { useRouter } from "next/navigation"
 import { toast } from "react-toast"
+import SimpleUnlockShareableFileAccessElement from "./elements/simple_unlock_shareable_file_access_element"
 
 export default function  UnlockShareableFileAccessClientComponent({shareableFileAccessId}: {shareableFileAccessId: string}) {
     
@@ -47,12 +48,9 @@ export default function  UnlockShareableFileAccessClientComponent({shareableFile
     
     
     return (
-        <div className="h-full w-full border border-red-500 flex justify-center items-center">
-            <form className="border border-green-500 p-2 flex flex-col gap-2" onSubmit={downloadFile}>
-                <label htmlFor="password"> Enter password for shareable file access  with id: {shareableFileAccessId}</label>
-                <input type="password" id="password" name="password" placeholder="Type your password here" className="border border-gray-300 rounded "></input>
-                <button type="submit" > Verify and download </button>
-            </form>
-        </div>
+        <SimpleUnlockShareableFileAccessElement
+            downloadFile={downloadFile} 
+            shareableFileAccessId={shareableFileAccessId}
+        />
     )
 }
