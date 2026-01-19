@@ -6,14 +6,14 @@ from dotenv import load_dotenv
 
 required_env_variables = [
     "DEV", #$ True/False for "reload" in uvicorn.run()
-    "DATABASE_URL_PARTIAL",
-    "JWT_SECRET",
-    "ENCRYPTION_KEY",
     "OBJECT_STORAGE_ACCESS_KEY_ID",
     "OBJECT_STORAGE_SECRET_ACCESS_KEY",
     "OBJECT_STORAGE_REGION",
     "OBJECT_STORAGE_ENDPOINT_URL",
     "OBJECT_STORAGE_BUCKET_NAME",
+    "DATABASE_URL_PARTIAL",
+    "JWT_SECRET",
+    "ENCRYPTION_KEY",
     "FRONTEND_BASE_URL",
 ]
 
