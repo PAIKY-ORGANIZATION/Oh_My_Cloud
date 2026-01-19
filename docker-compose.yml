@@ -7,7 +7,7 @@ services:
       - ./server/config/shared.env
       - ./server/config/docker_local.env
     volumes:
-      - ./server:/app
+      - ./server:/app:ro #$ Deliberately also included  everything outside src for more flexibility.
     depends_on:
       - postgres
 
@@ -22,3 +22,11 @@ services:
     
   frontend:
     build: ./client
+    ports:
+      - "3013:3000"
+    volumes:
+      - ./client:/app:ro #$ Deliberately also included  everything outside src for more flexibility.
+    depends_on:
+      - backend
+
+    
