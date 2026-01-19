@@ -42,11 +42,11 @@ jobs:
 
             #* Server vars
             
-            echo "OBJECT_STORAGE_ACCESS_KEY_ID=${{ secrets.HETZNER_OBJECT_STORAGE_ACCESS_KEY_ID }}" >> ./server/config/shared.env
-            echo "OBJECT_STORAGE_REGION=${{ secrets.HETZNER_OBJECT_STORAGE_REGION }}" >> ./server/config/shared.env
-            echo "OBJECT_STORAGE_SECRET_ACCESS_KEY=${{ secrets.HETZNER_OBJECT_STORAGE_SECRET_ACCESS_KEY }}" >> ./server/config/shared.env
+            echo "OBJECT_STORAGE_ACCESS_KEY_ID=${{ secrets.OBJECT_STORAGE_ACCESS_KEY_ID }}" >> ./server/config/shared.env
+            echo "OBJECT_STORAGE_REGION=${{ secrets.OBJECT_STORAGE_REGION }}" >> ./server/config/shared.env
+            echo "OBJECT_STORAGE_SECRET_ACCESS_KEY=${{ secrets.OBJECT_STORAGE_SECRET_ACCESS_KEY }}" >> ./server/config/shared.env
             echo "OBJECT_STORAGE_ENDPOINT_URL=${{ secrets.OBJECT_STORAGE_ENDPOINT_URL }}" >> ./server/config/shared.env #! Only required by Hetzner
-            echo "OBJECT_STORAGE_BUCKET_NAME=${{ secrets.HETZNER_OBJECT_STORAGE_BUCKET_NAME }}" >> ./server/config/shared.env
+            echo "OBJECT_STORAGE_BUCKET_NAME=${{ secrets.OBJECT_STORAGE_BUCKET_NAME }}" >> ./server/config/shared.env
             echo "DATABASE_URL_PARTIAL=${{ secrets.DATABASE_URL_PARTIAL }}" >> ./server/config/docker_cloud.env #! Currently just using a Postgres db in the docker-compose so this could be not a secret.
             echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> ./server/config/shared.env
             echo "ENCRYPTION_KEY=${{ secrets.ENCRYPTION_KEY }}" >> ./server/config/shared.env
