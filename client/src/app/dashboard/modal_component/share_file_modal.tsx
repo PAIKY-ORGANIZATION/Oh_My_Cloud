@@ -27,11 +27,6 @@ export default function  ShareFileModal({fileId,  setShareModalOpen}: {fileId: s
         const expirationTimeUnit = formData.get('unit') as ExpirationTimeUnit | null
         const expiresWhenOpened = formData.get('expires_when_opened') as boolean | null
 
-        if (showPasswordInput && (!password || password.length < 8)) {
-            toast.error("Password must be at least 8 characters long")
-            return
-        }
-
         const createShareableFileAccessRequestBody: CreateShareableFileAccessRequestBody = {
             file_id: fileId,
             password: password,
@@ -42,16 +37,20 @@ export default function  ShareFileModal({fileId,  setShareModalOpen}: {fileId: s
         }
 
         const createShareableFileAccessService = new CreateShareableFileAccessService(remoteAxiosClient)
+        let path_to_shareable_file_access: string
 
-        try{
-            const {path_to_shareable_file_access} = await createShareableFileAccessService.send(createShareableFileAccessRequestBody)
-            const link_to_shareable_file_access = process.env.NEXT_PUBLIC_REMOTE_BACKEND_URL + path_to_shareable_file_access
-            await navigator.clipboard.writeText(link_to_shareable_file_access) //$ Attaching the link to the clipboard
-            toast.success("Success! Shareable file access link copied to clipboard");
-            setShareModalOpen(false)
+        try{ //! Only for HTTP errors, don't catch other frontend errors here, that gives issues.
+            const data = await createShareableFileAccessService.send(createShareableFileAccessRequestBody)
+            path_to_shareable_file_access = data.path_to_shareable_file_access
         }catch(e){
             handleFrontendHttpError(e as Error, router)
+            return
         }
+
+        const link_to_shareable_file_access = process.env.NEXT_PUBLIC_REMOTE_BACKEND_URL + path_to_shareable_file_access
+        await navigator.clipboard.writeText(link_to_shareable_file_access) //$ Attaching the link to the clipboard
+        toast.success("Success! Shareable file access link copied to clipboard");
+        setShareModalOpen(false)
     }
 
 

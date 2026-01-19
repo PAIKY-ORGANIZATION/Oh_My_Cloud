@@ -8,7 +8,7 @@ services:
       - ./server/config/docker_local.env
     volumes:
       - ./server:/app:ro #$ Deliberately also included  everything outside src for more flexibility.
-      - 
+      - /app/temp
     depends_on:
       - postgres
 

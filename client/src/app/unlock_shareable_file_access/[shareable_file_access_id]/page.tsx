@@ -1,4 +1,4 @@
-import UnlockShareableFileAccessClientComponent from "./unlock_shareable_file_access_client_component"
+import UnlockShareableFileAccessClientComponent from "./client_component/unlock_shareable_file_access_component"
 
 type Params = {
     params: Promise<{shareable_file_access_id: string}>

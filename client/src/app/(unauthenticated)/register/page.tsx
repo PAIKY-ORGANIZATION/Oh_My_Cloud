@@ -49,15 +49,18 @@ export default function Register() {
             return
         }
         
-        try {
-            const registerUserService = new RegisterUserService(remoteAxiosClient)
-            await registerUserService.send(username, email, password)
-            toast.success("User registered successfully")
-            router.push(login_path)
+        const registerUserService = new RegisterUserService(remoteAxiosClient)
 
+        try { //! Only for HTTP errors, don't catch other frontend errors here, that gives issues.
+            await registerUserService.send(username, email, password)
+            
         } catch (e) {
             handleFrontendHttpError(e as Error, router)
+            return
         }
+
+        toast.success("User registered successfully")
+        router.push(login_path)
     }
 
 

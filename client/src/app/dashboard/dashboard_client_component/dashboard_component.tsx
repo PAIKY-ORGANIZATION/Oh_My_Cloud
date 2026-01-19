@@ -36,21 +36,23 @@ export function DashboardClientComponent ({initialUserFiles}: {initialUserFiles:
         const uploadFileService = new UploadFileService(remoteAxiosClient)
         // console.log(await file.arrayBuffer()) //! Doing this, for example, will buffer the file in the browser's memory
 
-        try{
-            const {file_id} =  await uploadFileService.send(formData)
-            toast.success("File uploaded successfully")
-
-            const newUserFile: UserFile  =  {
-                id: file_id,
-                original_file_name: file.name,
-                original_file_size: file.size
-            }
-
-            setUserFiles([...userFiles, newUserFile])
-            
+        let file_id: string
+        try{ //! Only for HTTP errors, don't catch other frontend errors here, that gives issues.
+            const data = await uploadFileService.send(formData)
+            file_id = data.file_id
         }catch(e){
             handleFrontendHttpError(e as Error, router)
+            return
         }
+
+        toast.success("File uploaded successfully")
+        const newUserFile: UserFile  =  {
+            id: file_id,
+            original_file_name: file.name,
+            original_file_size: file.size
+        }
+
+        setUserFiles([...userFiles, newUserFile])
     }
 
 

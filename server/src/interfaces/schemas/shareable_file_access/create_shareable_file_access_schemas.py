@@ -15,6 +15,6 @@ class CreateFileAccessRequest(BaseModel):
     model_config = ConfigDict(extra="forbid")
     
     file_id: str
-    password: Optional[str] = Field(min_length=8, max_length=12152024, default=None)
+    password: Optional[str] = Field(max_length=12152024, default=None)
     expiration_time: Optional[ExpirationTime]
     expires_when_opened: bool = False

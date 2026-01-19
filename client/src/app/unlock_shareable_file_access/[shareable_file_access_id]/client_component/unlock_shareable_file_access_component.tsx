@@ -20,21 +20,27 @@ export default function  UnlockShareableFileAccessClientComponent({shareableFile
             return
         }
 
-        try{
+        const consumeShareableFileAccessWithPasswordService = new ConsumeShareableFileAccessWithPasswordService(remoteAxiosClient)
+        let file: Blob
+        let fileName: string
+        try{ //! Only for HTTP errors, don't catch other frontend errors here, that gives issues.
 
-            const consumeShareableFileAccessWithPasswordService = new ConsumeShareableFileAccessWithPasswordService(remoteAxiosClient)
-            const {file, fileName} = await consumeShareableFileAccessWithPasswordService.send(shareableFileAccessId, password)
-            const url = URL.createObjectURL(file)
-
-            //$ This technique is used to create a regular anchor element that looks like the  ones we use in files like "./dashboard/dashboard_client_component.tsx" It allows to download to the  client's pc directly by clicking on it.
-            const ephemeralAnchorElement = document.createElement('a')
-            ephemeralAnchorElement.href = url
-            ephemeralAnchorElement.download = fileName
-            ephemeralAnchorElement.click()
+            const data = await consumeShareableFileAccessWithPasswordService.send(shareableFileAccessId, password)
+            file = data.file
+            fileName = data.fileName
             
         }catch(e){
             handleFrontendHttpError(e as Error, router)
+            return
         }
+        
+        const url = URL.createObjectURL(file)
+
+        //$ This technique is used to create a regular anchor element that looks like the  ones we use in files like "./dashboard/dashboard_client_component.tsx" It allows to download to the  client's pc directly by clicking on it.
+        const ephemeralAnchorElement = document.createElement('a')
+        ephemeralAnchorElement.href = url
+        ephemeralAnchorElement.download = fileName
+        ephemeralAnchorElement.click()
 
     }
     

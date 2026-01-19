@@ -30,7 +30,7 @@ export default function Login() {
             return
         }
 
-        try{
+        try{ //! Only for HTTP errors, don't catch other frontend errors here, that gives issues.
             const loginUserService = new LoginUserService(remoteAxiosClient)
             const userSession = await loginUserService.send(email, password)
             setUserSession(userSession)
