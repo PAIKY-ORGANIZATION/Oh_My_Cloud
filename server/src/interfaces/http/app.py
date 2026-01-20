@@ -34,7 +34,7 @@ app.add_middleware(
     # allow_origins=["http://localhost:3000"],
     # allow_origins=["http://localhost:4000"],
     # allow_origins=["*"],
-    allow_origins=[frontend_base_url],
+    allow_origins=[frontend_base_url], #$ while developing locally, Using "*" was fine (both Docker and local). When running in cloud (and https) It did require a specific frontend URL.
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
