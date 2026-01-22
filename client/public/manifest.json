@@ -1,6 +1,6 @@
 {
-  "name": "My App",
-  "short_name": "MyApp",
+  "name": "OhMyCloud",
+  "short_name": "OhMyCloud",
   "start_url": "/",
   "display": "standalone",
   "scope": "/",
