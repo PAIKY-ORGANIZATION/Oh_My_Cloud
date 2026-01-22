@@ -2,7 +2,7 @@
 
 
 import bootstrap_env
-bootstrap_env.load_env()
+bootstrap_env.load_env_from_local_files()
 
 
 
