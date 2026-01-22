@@ -29,7 +29,7 @@ async def get_db_session_provider():
         #$ "FastAPI uses introspection to detect that a dependency contains a yield inside a try / finally (or try / except / finally), FastAPI turns that dependency into a context manager."
 
     #% Under the hood, it will call .__anext__() on it to get the session and pass it to all the downstream dependencies. 
-    #% When the handler, the "finally" block naturally runs.
+    #% When the handlerends , the "finally" block naturally runs.
 
     #% If an exception is raised, it will be thrown 
 
